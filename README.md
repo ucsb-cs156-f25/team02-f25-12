@@ -1,4 +1,4 @@
-# STARTER-team02
+# team02-f25-12
 
 Instructions: <https://ucsb-cs156.github.io/f25/lab/team02.html>
 
@@ -15,12 +15,12 @@ TODO: Fill in this table with correct information.
 
 | Table                     | Name         | Github Id |
 |---------------------------|--------------|-----------|
-| UCSBDiningCommonsMenuItem |              |           |
-| UCSBOrganization          |              |           |
-| RecommendationRequest     |              |           |
-| MenuItemReview            |              |           |
-| HelpRequest               |              |           |
-| Articles                  |              |           |
+| UCSBDiningCommonsMenuItem |    Tej       |tejtrippathyucsb|
+| UCSBOrganization          |    Jayden    | jaytan3966|
+| RecommendationRequest     |    Joshua    |joshua-dev-codes|
+| MenuItemReview            |   Alvin      |Alvinlovescode|
+| HelpRequest               |   Hauke      |HRehwald|
+| Articles                  |   Ben        |yibinjiang04|
 
 Remember though, that in spite of these initial  assignments, it is still
 a team project.  Please help other team members to finish their work
