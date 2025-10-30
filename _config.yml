@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/team02-f25-12
 owner: ucsb-cs156-f25
 repo_name: team02-f25-12
-pull_requests: [{"author":{"id":"U_kgDOCqFMyA","is_bot":false,"login":"jaytan3966","name":"Jayden Tan"},"headRefName":"jaytan3966-patch-1","number":63,"title":"Revise README with team details and links","url":"https://github.com/ucsb-cs156-f25/team02-f25-12/pull/63"}]
+pull_requests: [{"author":{"id":"U_kgDOCqFMyA","is_bot":false,"login":"jaytan3966","name":"Jayden Tan"},"headRefName":"JT-create-fixtures-for-ucsborganization","number":64,"title":"created fixture of ucsbOrganization","url":"https://github.com/ucsb-cs156-f25/team02-f25-12/pull/64"}]
