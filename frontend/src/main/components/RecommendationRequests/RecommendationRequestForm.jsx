@@ -123,16 +123,10 @@ function RecommendationRequestForm({
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="done">
-        <Form.Check
-          type="checkbox"
-          label="Done"
-          {...register("done")}
-        />
+        <Form.Check type="checkbox" label="Done" {...register("done")} />
       </Form.Group>
 
-      <Button type="submit">
-        {buttonLabel}
-      </Button>
+      <Button type="submit">{buttonLabel}</Button>
       <Button
         variant="Secondary"
         onClick={() => navigate(-1)}
