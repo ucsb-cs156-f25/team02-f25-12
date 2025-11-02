@@ -1,5 +1,5 @@
 const ucsbOrganizationFixtures = {
-  oneOrganization: {
+  oneDate: {
     id: 1,
     orgCode: "TT",
     orgTranslationShort: "Theta Tau",
