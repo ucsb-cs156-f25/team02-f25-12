@@ -68,17 +68,28 @@ describe("RecommendationRequestForm tests", () => {
     expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
     expect(screen.getByText(`Id`)).toBeInTheDocument();
 
-    expect(screen.getByLabelText("Id")).toHaveValue(String(recommendationRequestFixtures.oneRecommendationRequest.id))
-    expect(screen.getByLabelText("Requester Email")).toHaveValue(recommendationRequestFixtures.oneRecommendationRequest.requesterEmail)
-    expect(screen.getByLabelText("Professor Email")).toHaveValue(recommendationRequestFixtures.oneRecommendationRequest.professorEmail)
-    expect(screen.getByLabelText("Explanation")).toHaveValue(recommendationRequestFixtures.oneRecommendationRequest.explanation)
-    expect(screen.getByLabelText("Date Requested (iso format)")).toHaveValue(recommendationRequestFixtures.oneRecommendationRequest.dateRequested)
-    expect(screen.getByLabelText("Date Needed (iso format)")).toHaveValue(recommendationRequestFixtures.oneRecommendationRequest.dateNeeded)
+    expect(screen.getByLabelText("Id")).toHaveValue(
+      String(recommendationRequestFixtures.oneRecommendationRequest.id),
+    );
+    expect(screen.getByLabelText("Requester Email")).toHaveValue(
+      recommendationRequestFixtures.oneRecommendationRequest.requesterEmail,
+    );
+    expect(screen.getByLabelText("Professor Email")).toHaveValue(
+      recommendationRequestFixtures.oneRecommendationRequest.professorEmail,
+    );
+    expect(screen.getByLabelText("Explanation")).toHaveValue(
+      recommendationRequestFixtures.oneRecommendationRequest.explanation,
+    );
+    expect(screen.getByLabelText("Date Requested (iso format)")).toHaveValue(
+      recommendationRequestFixtures.oneRecommendationRequest.dateRequested,
+    );
+    expect(screen.getByLabelText("Date Needed (iso format)")).toHaveValue(
+      recommendationRequestFixtures.oneRecommendationRequest.dateNeeded,
+    );
     if (recommendationRequestFixtures.oneRecommendationRequest.done) {
-      expect(screen.getByLabelText("Done")).toBeChecked()
-    }
-    else {
-      expect(screen.getByLabelText("Done")).not.toBeChecked()
+      expect(screen.getByLabelText("Done")).toBeChecked();
+    } else {
+      expect(screen.getByLabelText("Done")).not.toBeChecked();
     }
   });
 
