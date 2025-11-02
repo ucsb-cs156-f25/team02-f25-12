@@ -5,7 +5,6 @@ import MenuItemReviewForm from "main/components/MenuItemReview/MenuItemReviewFor
 import { menuItemReviewFixtures } from "fixtures/menuItemReviewFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { expectTypeOf } from "vitest";
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
