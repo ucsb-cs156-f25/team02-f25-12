@@ -73,15 +73,24 @@ describe("HelpRequestForm tests", () => {
 // ensure time is valid so only email validation matters
 fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } });
 
-// --- kill missing `$` (trailing garbage) ---
-fireEvent.change(emailField, { target: { value: "foo@bar.com EXTRA" } });
-fireEvent.click(submitButton);
-await screen.findByText(/Enter a valid email\./i);
+  const makeAllButEmailValid = () => {
+    fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } }); // matches regex
+    fireEvent.change(teamIdField, { target: { value: "s25-5pm-2" } });
+    fireEvent.change(torField, { target: { value: "A1" } });
+    fireEvent.change(explanationField, { target: { value: "help" } });
+  };
 
-// --- kill missing `^` (leading garbage) ---
-fireEvent.change(emailField, { target: { value: "GARBAGE foo@bar.com" } });
-fireEvent.click(submitButton);
-await screen.findByText(/Enter a valid email\./i);
+  // 2) kill missing `$` (trailing garbage should be invalid)
+  makeAllButEmailValid();
+  fireEvent.change(emailField, { target: { value: "foo@bar.com EXTRA" } });
+  fireEvent.click(submitButton);
+  await screen.findByText(/Enter a valid email\./i);
+
+  // 3) kill missing `^` (leading garbage should be invalid)
+  makeAllButEmailValid();
+  fireEvent.change(emailField, { target: { value: "GARBAGE foo@bar.com" } });
+  fireEvent.click(submitButton);
+  await screen.findByText(/Enter a valid email\./i);
   });
 
   test("shows required messages on missing input", async () => {
