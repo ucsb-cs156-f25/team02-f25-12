@@ -16,6 +16,8 @@ function UCSBDateForm({
   // Stryker restore all
 
   const navigate = useNavigate();
+  const computedLabel = initialContents ? "Update" : (buttonLabel || "Create");
+
 
   // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
   // Note that even this complex regex may still need some tweaks
