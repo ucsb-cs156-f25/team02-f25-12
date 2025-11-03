@@ -70,18 +70,17 @@ describe("HelpRequestForm tests", () => {
       screen.getByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i)
     ).toBeInTheDocument();
 
-// kill missing `$` (trailing garbage)
-fireEvent.change(emailField, { target: { value: "" } }); // clear
-fireEvent.focus(emailField);
+// ensure time is valid so only email validation matters
+fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } });
+
+// --- kill missing `$` (trailing garbage) ---
 fireEvent.change(emailField, { target: { value: "foo@bar.com EXTRA" } });
-fireEvent.blur(emailField); // trigger validation
+fireEvent.click(submitButton);
 await screen.findByText(/Enter a valid email\./i);
 
-// kill missing `^` (leading garbage)
-fireEvent.change(emailField, { target: { value: "" } }); // clear
-fireEvent.focus(emailField);
+// --- kill missing `^` (leading garbage) ---
 fireEvent.change(emailField, { target: { value: "GARBAGE foo@bar.com" } });
-fireEvent.blur(emailField); // trigger validation
+fireEvent.click(submitButton);
 await screen.findByText(/Enter a valid email\./i);
   });
 
