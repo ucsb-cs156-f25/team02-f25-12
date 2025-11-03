@@ -25,6 +25,8 @@ describe("HelpRequestForm tests", () => {
     await screen.findByText(/Solved/i);
     await screen.findByTestId("HelpRequestForm-submit");
     expect(screen.getByTestId("HelpRequestForm-submit")).toBeInTheDocument();
+    const submitBtn = await screen.findByTestId("HelpRequestForm-submit");
+    expect(submitBtn).toHaveTextContent(/^Create$/);  
   });
 
   test("renders correctly with initialContents (edit mode)", async () => {
@@ -34,7 +36,8 @@ describe("HelpRequestForm tests", () => {
       </Router>
     );
 
-    await screen.findByTestId("HelpRequestForm-id");
+    const submitBtn = await screen.findByTestId("HelpRequestForm-submit");
+    expect(submitBtn).toHaveTextContent(/^Update$/);
     expect(screen.getByText(/Id/i)).toBeInTheDocument();
     expect(screen.getByTestId("HelpRequestForm-id")).toHaveValue(
       String(helpRequestFixtures.oneRequest.id)
@@ -66,6 +69,16 @@ describe("HelpRequestForm tests", () => {
     expect(
       screen.getByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i)
     ).toBeInTheDocument();
+
+  await userEvent.clear(emailField);
+  await userEvent.type(emailField, "foo@bar.com EXTRA");
+  await userEvent.tab();
+  await screen.findByText(/Enter a valid email\./i);
+
+  await userEvent.clear(emailField);
+  await userEvent.type(emailField, "GARBAGE foo@bar.com");
+  await userEvent.tab();
+  await screen.findByText(/Enter a valid email\./i);
   });
 
   test("shows required messages on missing input", async () => {
