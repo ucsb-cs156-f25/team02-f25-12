@@ -56,6 +56,12 @@ describe("HelpRequestForm tests", () => {
       "HelpRequestForm-requesterEmail"
     );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
+    const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
+    const torField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom"
+    );
+    const explanationField = screen.getByTestId("HelpRequestForm-explanation");
+    const solvedCheckbox = screen.getByTestId("HelpRequestForm-solved");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
     // bad formats
@@ -70,14 +76,17 @@ describe("HelpRequestForm tests", () => {
       screen.getByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i)
     ).toBeInTheDocument();
 
-// ensure time is valid so only email validation matters
-fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } });
+  fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } });
 
   const makeAllButEmailValid = () => {
-    fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } }); // matches regex
-    fireEvent.change(teamIdField, { target: { value: "s25-5pm-2" } });
-    fireEvent.change(torField, { target: { value: "A1" } });
-    fireEvent.change(explanationField, { target: { value: "help" } });
+    fireEvent.change(emailField, { target: { value: "student@ucsb.edu" } });
+    fireEvent.change(requestTimeField, { target: { value: "2025-10-29T14:30" } });
+    fireEvent.change(teamIdField, { target: { value: "f25-5pm-1" } });
+    fireEvent.change(torField, { target: { value: "Table 4" } });
+    fireEvent.change(explanationField, {
+      target: { value: "Need help with unit tests" },
+    });
+    fireEvent.click(solvedCheckbox); // optional
   };
 
   // 2) kill missing `$` (trailing garbage should be invalid)
