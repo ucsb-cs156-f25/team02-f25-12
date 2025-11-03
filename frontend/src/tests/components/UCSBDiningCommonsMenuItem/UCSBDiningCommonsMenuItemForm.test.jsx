@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router";
 
-import ucsbDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm";
 import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UCSBDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm";
+import { expect } from "vitest";
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
@@ -37,6 +37,12 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
       const header = screen.getByText(headerText);
       expect(header).toBeInTheDocument();
     });
+
+    expect(screen.queryByTestId(`${testId}-diningCommonsCode`)).toBeInTheDocument();
+    expect(screen.queryByTestId(`${testId}-name`)).toBeInTheDocument();
+    expect(screen.queryByTestId(`${testId}-station`)).toBeInTheDocument();
+    expect(screen.queryByTestId(`${testId}-submit`)).toBeInTheDocument();
+
   });
 
   test("renders correctly when passing in initialContents", async () => {
