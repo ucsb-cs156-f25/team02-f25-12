@@ -112,7 +112,7 @@ function UCSBDateForm({
       <Row>
         <Col>
           <Button type="submit" data-testid="UCSBDateForm-submit">
-            {buttonLabel}
+            {computedLabel}
           </Button>
           <Button
             variant="Secondary"

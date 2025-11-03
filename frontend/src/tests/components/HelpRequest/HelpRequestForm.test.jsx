@@ -70,15 +70,19 @@ describe("HelpRequestForm tests", () => {
       screen.getByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i)
     ).toBeInTheDocument();
 
-  await userEvent.clear(emailField);
-  await userEvent.type(emailField, "foo@bar.com EXTRA");
-  await userEvent.tab();
-  await screen.findByText(/Enter a valid email\./i);
+// kill missing `$` (trailing garbage)
+fireEvent.change(emailField, { target: { value: "" } }); // clear
+fireEvent.focus(emailField);
+fireEvent.change(emailField, { target: { value: "foo@bar.com EXTRA" } });
+fireEvent.blur(emailField); // trigger validation
+await screen.findByText(/Enter a valid email\./i);
 
-  await userEvent.clear(emailField);
-  await userEvent.type(emailField, "GARBAGE foo@bar.com");
-  await userEvent.tab();
-  await screen.findByText(/Enter a valid email\./i);
+// kill missing `^` (leading garbage)
+fireEvent.change(emailField, { target: { value: "" } }); // clear
+fireEvent.focus(emailField);
+fireEvent.change(emailField, { target: { value: "GARBAGE foo@bar.com" } });
+fireEvent.blur(emailField); // trigger validation
+await screen.findByText(/Enter a valid email\./i);
   });
 
   test("shows required messages on missing input", async () => {
