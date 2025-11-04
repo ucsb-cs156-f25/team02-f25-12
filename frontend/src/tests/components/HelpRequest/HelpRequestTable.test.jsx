@@ -65,15 +65,6 @@ describe("UserTable tests", () => {
     expect(deleteButton).not.toBeInTheDocument();
   });
 
-  it("renders Solved as Yes/No", () => {
-  const rows = [
-    { id: 1, requesterEmail: "a@x.com", requestTime: "2025-10-30T14:30", teamId: "t1", tableOrBreakoutRoom: "A", explanation: "e1", solved: true  },
-    { id: 2, requesterEmail: "b@x.com", requestTime: "2025-10-30T14:30", teamId: "t2", tableOrBreakoutRoom: "B", explanation: "e2", solved: false },
-  ];
-  render(<HelpRequestTable requests={rows} currentUser={null} />);
-  expect(screen.getByTestId("HelpRequestTable-cell-row-0-col-Solved")).toHaveTextContent(/^Yes$/);
-  expect(screen.getByTestId("HelpRequestTable-cell-row-1-col-Solved")).toHaveTextContent(/^No$/);
-});
 
   test("Has the expected colum headers and content for adminUser", () => {
     const currentUser = currentUserFixtures.adminUser;
@@ -122,6 +113,17 @@ describe("UserTable tests", () => {
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
   });
+
+    it("renders Solved as Yes/No", () => {
+  const rows = [
+    { id: 1, requesterEmail: "a@x.com", requestTime: "2025-10-30T14:30", teamId: "t1", tableOrBreakoutRoom: "A", explanation: "e1", solved: true  },
+    { id: 2, requesterEmail: "b@x.com", requestTime: "2025-10-30T14:30", teamId: "t2", tableOrBreakoutRoom: "B", explanation: "e2", solved: false },
+  ];
+  render(<HelpRequestTable requests={rows} currentUser={null} />);
+  expect(screen.getByTestId("HelpRequestTable-cell-row-0-col-Solved")).toHaveTextContent(/^Yes$/);
+  expect(screen.getByTestId("HelpRequestTable-cell-row-1-col-Solved")).toHaveTextContent(/^No$/);
+});
+
 
   test("Edit button navigates to the edit page for admin user", async () => {
     const currentUser = currentUserFixtures.adminUser;
