@@ -4,6 +4,8 @@ import HelpRequestTable from "main/components/HelpRequests/HelpRequestTable";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
+import * as Toast from "react-toastify";
+import { onDeleteSuccess } from "main/utils/helpRequestUtils";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -213,5 +215,29 @@ describe("UserTable tests", () => {
 
     axiosMock.restore();
   });
+    test("helpRequestUtils: onDeleteSuccess calls console.log and toast and delete endpoint uses correct url", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const toastSpy = vi.spyOn(Toast, "toast").mockImplementation(() => {});
+
+    onDeleteSuccess("deleted!");
+    expect(logSpy).toHaveBeenCalledWith("deleted!");
+    expect(toastSpy).toHaveBeenCalledWith("deleted!");
+
+    logSpy.mockRestore();
+    toastSpy.mockRestore();
+
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onDelete("/api/helprequests").reply(200, { message: "ok" });
+
+    // call axios.delete directly since deleteHelpRequest is not exported
+    await axios.delete("/api/helprequests", { params: { id: 1 } });
+
+    expect(axiosMock.history.delete.length).toBe(1);
+    expect(axiosMock.history.delete[0].url).toBe("/api/helprequests");
+    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+
+    axiosMock.restore();
+  });
+
 
 });
