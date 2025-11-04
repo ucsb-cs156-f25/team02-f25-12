@@ -15,7 +15,7 @@ TODO: Fill in this table with correct information.
 
 | Table                     | Name         | Github Id |
 |---------------------------|--------------|-----------|
-| UCSBDiningCommonsMenuItem |    Tej       |tejtrippathyucsb|
+| UCSBDiningCommonsMenuItem |    Tej       |tejtripathyucsb|
 | UCSBOrganization          |    Jayden    | jaytan3966|
 | RecommendationRequest     |    Joshua    |joshua-dev-codes|
 | MenuItemReview            |   Alvin      |Alvinlovescode|
