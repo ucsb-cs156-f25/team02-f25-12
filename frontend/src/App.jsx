@@ -74,7 +74,11 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/recommendationRequests" element={<RecommendationRequestsIndexPage />} />
+          <Route
+            exact
+            path="/recommendationRequests"
+            element={<RecommendationRequestsIndexPage />}
+          />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
