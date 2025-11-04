@@ -4,7 +4,7 @@ import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMen
 
 export default {
   title: "components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm",
-  component: UCSBDiningCommonsMenuItemForm
+  component: UCSBDiningCommonsMenuItemForm,
 };
 
 const Template = (args) => {
