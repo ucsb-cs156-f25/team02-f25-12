@@ -96,7 +96,7 @@ function UCSBOrganizationForm({
           {...register("inactive")}
         />
         <Form.Control.Feedback type="invalid" className="d-block">
-          {errors.inactive?.message}
+          {errors.inactive}
         </Form.Control.Feedback>
       </Form.Group>
 
