@@ -40,10 +40,6 @@ export default function HelpRequestTable({ requests, currentUser }) {
       accessorKey: "requesterEmail",
     },
     {
-      header: "Name",
-      accessorKey: "name",
-    },
-    {
       header: "Request Time",
       accessorKey: "requestTime",
     },
