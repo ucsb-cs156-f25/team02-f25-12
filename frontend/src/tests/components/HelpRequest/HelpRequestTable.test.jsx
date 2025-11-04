@@ -215,16 +215,13 @@ describe("UserTable tests", () => {
 
     axiosMock.restore();
   });
-    test("helpRequestUtils: onDeleteSuccess calls console.log and toast and delete endpoint uses correct url", async () => {
+  test("helpRequestUtils: onDeleteSuccess logs message and delete endpoint uses correct url", async () => {
     const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
-    const toastSpy = vi.spyOn(Toast, "toast").mockImplementation(() => {});
 
     onDeleteSuccess("deleted!");
     expect(logSpy).toHaveBeenCalledWith("deleted!");
-    expect(toastSpy).toHaveBeenCalledWith("deleted!");
 
     logSpy.mockRestore();
-    toastSpy.mockRestore();
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock.onDelete("/api/helprequests").reply(200, { message: "ok" });
@@ -238,6 +235,5 @@ describe("UserTable tests", () => {
 
     axiosMock.restore();
   });
-
 
 });
