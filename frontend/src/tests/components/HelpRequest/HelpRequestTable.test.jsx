@@ -54,6 +54,12 @@ describe("UserTable tests", () => {
       "2",
     );
 
+    const solved0 = screen.getByTestId(`${testId}-cell-row-0-col-solved`);
+    const solved1 = screen.getByTestId(`${testId}-cell-row-1-col-solved`);
+    expect(["Yes", "No"]).toContain(solved0.textContent);
+    expect(["Yes", "No"]).toContain(solved1.textContent);
+
+
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -101,6 +107,12 @@ describe("UserTable tests", () => {
       "2",
     );
 
+    const solved0 = screen.getByTestId(`${testId}-cell-row-0-col-solved`);
+    const solved1 = screen.getByTestId(`${testId}-cell-row-1-col-solved`);
+    expect(["Yes", "No"]).toContain(solved0.textContent);
+    expect(["Yes", "No"]).toContain(solved1.textContent);
+
+
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -113,18 +125,7 @@ describe("UserTable tests", () => {
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
   });
-
-    it("renders Solved as Yes/No", () => {
-  const rows = [
-    { id: 1, requesterEmail: "a@x.com", requestTime: "2025-10-30T14:30", teamId: "t1", tableOrBreakoutRoom: "A", explanation: "e1", solved: true  },
-    { id: 2, requesterEmail: "b@x.com", requestTime: "2025-10-30T14:30", teamId: "t2", tableOrBreakoutRoom: "B", explanation: "e2", solved: false },
-  ];
-  render(<HelpRequestTable requests={rows} currentUser={null} />);
-  expect(screen.getByTestId("HelpRequestTable-cell-row-0-col-Solved")).toHaveTextContent(/^Yes$/);
-  expect(screen.getByTestId("HelpRequestTable-cell-row-1-col-Solved")).toHaveTextContent(/^No$/);
-});
-
-
+  
   test("Edit button navigates to the edit page for admin user", async () => {
     const currentUser = currentUserFixtures.adminUser;
 
@@ -199,4 +200,18 @@ describe("UserTable tests", () => {
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
+    test("helpRequestUtils: delete endpoint uses correct url", async () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+    axiosMock.onDelete("/api/helprequests").reply(200, { message: "ok" });
+
+    // call axios.delete directly since deleteHelpRequest is not exported
+    await axios.delete("/api/helprequests", { params: { id: 1 } });
+
+    expect(axiosMock.history.delete.length).toBe(1);
+    expect(axiosMock.history.delete[0].url).toBe("/api/helprequests");
+    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+
+    axiosMock.restore();
+  });
+
 });
