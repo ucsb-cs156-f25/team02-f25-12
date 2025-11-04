@@ -235,5 +235,14 @@ describe("UserTable tests", () => {
 
     axiosMock.restore();
   });
+    test("helpRequestUtils: cellToAxiosParamsDelete returns correct url and params", () => {
+    const fakeCell = { row: { original: { id: 1 } } };
+    const params = cellToAxiosParamsDelete(fakeCell);
+    expect(params).toBeDefined();
+    expect(params.url).toBe("/api/helprequests");   // catches mutant changing the string literal
+    // params may put id in params or data depending on implementation; ensure id is present
+    expect(params.params?.id || params.data?.id).toBe(1);
+  });
+
 
 });
