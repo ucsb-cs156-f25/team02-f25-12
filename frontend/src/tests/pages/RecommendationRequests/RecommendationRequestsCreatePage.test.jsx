@@ -60,7 +60,7 @@ describe("RecommendationRequestsCreatePage tests", () => {
     });
   });
 
-  test("on submit, makes request to backend, and redirects to /recommendationRequests", async () => {
+  test("on submit, makes request to backend, and redirects to /recommendationrequests", async () => {
     const queryClient = new QueryClient();
     const recommendationRequest = {
       id: 1,
@@ -73,7 +73,7 @@ describe("RecommendationRequestsCreatePage tests", () => {
     };
 
     axiosMock
-      .onPost("/api/recommendationRequests/post")
+      .onPost("/api/recommendationrequests/post")
       .reply(202, recommendationRequest);
 
     render(
@@ -141,7 +141,7 @@ describe("RecommendationRequestsCreatePage tests", () => {
       "New recommendation request Created - id: 1 requester email: bob_gaucho@ucsb.edu",
     );
     expect(mockNavigate).toHaveBeenCalledWith({
-      to: "/recommendationRequests",
+      to: "/recommendationrequests",
     });
   });
 });

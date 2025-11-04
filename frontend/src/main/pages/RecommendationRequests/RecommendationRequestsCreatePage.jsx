@@ -8,7 +8,7 @@ export default function RecommendationRequestsCreatePage({
   storybook = false,
 }) {
   const objectToAxiosParams = (recommendationRequest) => ({
-    url: "/api/recommendationRequests/post",
+    url: "/api/recommendationrequests/post",
     method: "POST",
     params: {
       requesterEmail: recommendationRequest.requesterEmail,
@@ -30,7 +30,7 @@ export default function RecommendationRequestsCreatePage({
     objectToAxiosParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    ["/api/recommendationRequests/all"], // mutation makes this key stale so that pages relying on it reload
+    ["/api/recommendationrequests/all"], // mutation makes this key stale so that pages relying on it reload
   );
 
   const { isSuccess } = mutation;
@@ -40,7 +40,7 @@ export default function RecommendationRequestsCreatePage({
   };
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/recommendationRequests" />;
+    return <Navigate to="/recommendationrequests" />;
   }
 
   return (
