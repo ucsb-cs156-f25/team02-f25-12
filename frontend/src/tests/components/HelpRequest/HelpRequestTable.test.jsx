@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import * as Toast from "react-toastify";
-import { onDeleteSuccess } from "main/utils/helpRequestUtils";
+import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/helpRequestUtils";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
