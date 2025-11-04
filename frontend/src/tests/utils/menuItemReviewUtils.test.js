@@ -1,7 +1,7 @@
 import {
   onDeleteSuccess,
   cellToAxiosParamsDelete,
-} from "main/utils/MenuItemReviewUtils";
+} from "main/utils/menuItemReviewUtils";
 import mockConsole from "tests/testutils/mockConsole";
 
 const mockToast = vi.fn();
@@ -13,7 +13,7 @@ vi.mock("react-toastify", async (importOriginal) => {
   };
 });
 
-describe("MenuItemReviewUtils", () => {
+describe("menuItemReviewUtils", () => {
   describe("onDeleteSuccess", () => {
     test("It puts the message on console.log and in a toast", () => {
       // arrange
