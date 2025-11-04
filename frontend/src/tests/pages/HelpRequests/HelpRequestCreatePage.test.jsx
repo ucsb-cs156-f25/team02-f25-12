@@ -1,12 +1,12 @@
-import { render, waitFor, fireEvent, screen } from "@testing-library/react";
-import HelpRequestCreatePage from "main/pages/HelpRequests/HelpRequestCreatePage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router";
+// import { render, waitFor, fireEvent, screen } from "@testing-library/react";
+// import HelpRequestCreatePage from "main/pages/HelpRequests/HelpRequestCreatePage";
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import { MemoryRouter } from "react-router";
 
-import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
-import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import axios from "axios";
-import AxiosMockAdapter from "axios-mock-adapter";
+// import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
+// import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+// import axios from "axios";
+// import AxiosMockAdapter from "axios-mock-adapter";
 
 // const mockToast = vi.fn();
 // vi.mock("react-toastify", async (importOriginal) => {
@@ -140,7 +140,16 @@ import AxiosMockAdapter from "axios-mock-adapter";
 //     expect(mockNavigate).toBeCalledWith({ to: "/helprequests" });
 //   });
 // });
+import { render, screen } from "@testing-library/react";
+import HelpRequestCreatePage from "main/pages/HelpRequests/HelpRequestCreatePage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MemoryRouter } from "react-router";
 
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
+import { expect } from "vitest";
 describe("HelpRequestCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
