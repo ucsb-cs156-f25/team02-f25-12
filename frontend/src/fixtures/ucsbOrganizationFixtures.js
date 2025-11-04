@@ -1,12 +1,12 @@
 const ucsbOrganizationFixtures = {
-  oneDate: {
+  oneOrganization: {
         id: 1,
         orgCode: "TT",
         orgTranslationShort: "Theta Tau",
         orgTranslation: "Theta Tau Engineering Frat",
         inactive: false,
   },
-  threeDates: [
+  threeOrganizations: [
     {
         id: 1,
         orgCode: "TT",
