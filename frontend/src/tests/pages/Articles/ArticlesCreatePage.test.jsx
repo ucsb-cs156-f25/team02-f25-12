@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import RecommendationRequestsCreatePage from "main/pages/RecommendationRequests/RecommendationRequestsCreatePage";
+import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 
@@ -30,7 +30,7 @@ vi.mock("react-router", async (importOriginal) => {
   };
 });
 
-describe("RecommendationRequestsCreatePage tests", () => {
+describe("ArticlesCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
@@ -50,98 +50,89 @@ describe("RecommendationRequestsCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RecommendationRequestsCreatePage />
+          <ArticlesCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
+      expect(screen.getByLabelText("Title")).toBeInTheDocument();
     });
   });
 
-  test("on submit, makes request to backend, and redirects to /recommendationrequests", async () => {
+  test("on submit, makes request to backend, and redirects to /articles", async () => {
     const queryClient = new QueryClient();
-    const recommendationRequest = {
+    const article = {
       id: 1,
-      requesterEmail: "bob_gaucho@ucsb.edu",
-      professorEmail: "pconrad@ucsb.edu",
-      explanation: "recommendation request for the team02 project",
-      dateRequested: "2025-11-01T12:23",
-      dateNeeded: "2026-02-01T12:00",
-      done: false,
+      title: "First Article",
+      url: "https://www.nytimes.com/2025/11/03/us/politics/trump-mamdani-tariffs-shutdown.html",
+      explanation: "The first article.",
+      email: "yibinjiang@ucsb.edu",
+      dateAdded: "2025-11-03T19:52:00",
     };
 
-    axiosMock
-      .onPost("/api/recommendationrequests/post")
-      .reply(202, recommendationRequest);
+    axiosMock.onPost("/api/articles/post").reply(202, article);
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RecommendationRequestsCreatePage />
+          <ArticlesCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
+      expect(screen.getByLabelText("Title")).toBeInTheDocument();
     });
 
-    const requesterEmailInput = screen.getByLabelText("Requester Email");
-    expect(requesterEmailInput).toBeInTheDocument();
+    const titleInput = screen.getByLabelText("Title");
+    expect(titleInput).toBeInTheDocument();
 
-    const professorEmailInput = screen.getByLabelText("Professor Email");
-    expect(professorEmailInput).toBeInTheDocument();
+    const urlInput = screen.getByLabelText("Url");
+    expect(urlInput).toBeInTheDocument();
 
     const explanationInput = screen.getByLabelText("Explanation");
     expect(explanationInput).toBeInTheDocument();
 
-    const dateRequestedInput = screen.getByLabelText(
-      "Date Requested (iso format)",
-    );
-    expect(dateRequestedInput).toBeInTheDocument();
+    const emailInput = screen.getByLabelText("Email");
+    expect(emailInput).toBeInTheDocument();
 
-    const dateNeededInput = screen.getByLabelText("Date Needed (iso format)");
-    expect(dateNeededInput).toBeInTheDocument();
+    const dateAddedInput = screen.getByLabelText("Date Added (iso format)");
+    expect(dateAddedInput).toBeInTheDocument();
 
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    fireEvent.change(requesterEmailInput, {
-      target: { value: "bob_gaucho@ucsb.edu" },
-    });
-    fireEvent.change(professorEmailInput, {
-      target: { value: "pconrad@ucsb.edu" },
+    fireEvent.change(titleInput, { target: { value: "First Article" } });
+    fireEvent.change(urlInput, {
+      target: {
+        value:
+          "https://www.nytimes.com/2025/11/03/us/politics/trump-mamdani-tariffs-shutdown.html",
+      },
     });
     fireEvent.change(explanationInput, {
-      target: { value: "recommendation request for the team02 project" },
+      target: { value: "The first article." },
     });
-    fireEvent.change(dateRequestedInput, {
-      target: { value: "2025-11-01T12:23" },
-    });
-    fireEvent.change(dateNeededInput, {
-      target: { value: "2026-02-01T12:00" },
+    fireEvent.change(emailInput, { target: { value: "yibinjiang@ucsb.edu" } });
+    fireEvent.change(dateAddedInput, {
+      target: { value: "2025-11-03T19:52:00" },
     });
     fireEvent.click(createButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      requesterEmail: "bob_gaucho@ucsb.edu",
-      professorEmail: "pconrad@ucsb.edu",
-      explanation: "recommendation request for the team02 project",
-      dateRequested: "2025-11-01T12:23",
-      dateNeeded: "2026-02-01T12:00",
-      done: false,
+      title: "First Article",
+      url: "https://www.nytimes.com/2025/11/03/us/politics/trump-mamdani-tariffs-shutdown.html",
+      explanation: "The first article.",
+      email: "yibinjiang@ucsb.edu",
+      dateAdded: "2025-11-03T19:52",
     });
 
     // assert - check that the toast was called with the expected message
     expect(mockToast).toHaveBeenCalledWith(
-      "New recommendation request Created - id: 1 requester email: bob_gaucho@ucsb.edu",
+      "New article Created - id: 1 title: First Article",
     );
-    expect(mockNavigate).toHaveBeenCalledWith({
-      to: "/recommendationrequests",
-    });
+    expect(mockNavigate).toHaveBeenCalledWith({ to: "/articles" });
   });
 });
