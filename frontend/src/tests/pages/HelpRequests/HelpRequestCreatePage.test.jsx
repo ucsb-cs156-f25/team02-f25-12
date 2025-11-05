@@ -88,7 +88,7 @@ describe("HelpRequestCreatePage tests", () => {
       ).toBeInTheDocument();
     });
     
-    const teamIdQField = screen.getByTestId("HelpRequestForm-teamId");
+    const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
     const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
     const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
@@ -97,27 +97,27 @@ describe("HelpRequestCreatePage tests", () => {
 
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
-    fireEvent.change(screen.getByTestId("HelpRequestForm-requesterEmail"), {
+    fireEvent.change(requesterEmailField, {
       target: { value: "student@example.edu" },
     });
 
-    fireEvent.change(screen.getByTestId("HelpRequestForm-teamId"), {
+    fireEvent.change(teamIdField, {
       target: { value: "team7" },
     });
 
-    fireEvent.change(screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom"), {
+    fireEvent.change(tableOrBreakoutRoomField, {
       target: { value: "Table 3" },
     });
 
-    fireEvent.change(screen.getByTestId("HelpRequestForm-requestTime"), {
+    fireEvent.change(requestTimeField, {
       target: { value: "2025-10-30T14:30" }, 
     });
 
-    fireEvent.change(screen.getByTestId("HelpRequestForm-explanation"), {
+    fireEvent.change(explanationField, {
       target: { value: "Need help." },
     });
 
-    fireEvent.click(screen.getByTestId("HelpRequestForm-solved")); 
+    fireEvent.click(solvedField); 
 
     expect(submitButton).toBeInTheDocument();
 
