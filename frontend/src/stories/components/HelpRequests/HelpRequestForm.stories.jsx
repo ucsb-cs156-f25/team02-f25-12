@@ -3,7 +3,7 @@ import HelpRequestForm from "main/components/HelpRequests/HelpRequestForm.jsx";
 import { helpRequestFixtures } from "fixtures/helpRequestFixtures.js";
 
 export default {
-  title: "components/HelpRequest/HelpRequestForm",
+  title: "components/HelpRequests/HelpRequestForm",
   component: HelpRequestForm,
 };
 
