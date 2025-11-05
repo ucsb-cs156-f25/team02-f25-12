@@ -131,7 +131,8 @@ public class HelpRequestController extends ApiController {
     existing.setExplanation(incoming.getExplanation());
     existing.setSolved(incoming.getSolved());
 
-    return helpRequestRepository.save(existing);
+    helpRequestRepository.save(existing);
+    return existing;
   }
 
   /**
