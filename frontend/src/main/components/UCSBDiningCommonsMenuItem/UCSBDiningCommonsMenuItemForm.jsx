@@ -2,7 +2,11 @@ import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-function UCSBDiningCommonsMenuItemForm({initialContents, submitAction,buttonLabel = "Create"}) {
+function UCSBDiningCommonsMenuItemForm({
+  initialContents,
+  submitAction,
+  buttonLabel = "Create",
+}) {
   // Stryker disable all
   const {
     register,
@@ -66,7 +70,7 @@ function UCSBDiningCommonsMenuItemForm({initialContents, submitAction,buttonLabe
           {errors.name?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      
+
       <Form.Group className="mb-3">
         <Form.Label htmlFor="station">Station</Form.Label>
         <Form.Control
@@ -82,7 +86,6 @@ function UCSBDiningCommonsMenuItemForm({initialContents, submitAction,buttonLabe
           {errors.station?.message}
         </Form.Control.Feedback>
       </Form.Group>
-
 
       <Button type="submit" data-testid={testIdPrefix + "-submit"}>
         {buttonLabel}

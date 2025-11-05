@@ -2,21 +2,21 @@ import React from "react";
 import { useBackend } from "main/utils/useBackend";
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import RecommendationRequestTable from "main/components/RecommendationRequests/RecommendationRequestTable";
+import ArticleTable from "main/components/Articles/ArticleTable";
 import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
 import { Button } from "react-bootstrap";
 
-export default function RecommendationRequestsIndexPage() {
+export default function ArticleIndexPage() {
   const currentUser = useCurrentUser();
 
   const {
-    data: recommendationRequests,
+    data: articles,
     error: _error,
     status: _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
-    ["/api/recommendationrequests/all"],
-    { method: "GET", url: "/api/recommendationrequests/all" },
+    ["/api/articles/all"],
+    { method: "GET", url: "/api/articles/all" },
     // Stryker disable next-line all : don't test default value of empty list
     [],
   );
@@ -26,10 +26,10 @@ export default function RecommendationRequestsIndexPage() {
       return (
         <Button
           variant="primary"
-          href="/recommendationrequests/create"
+          href="/articles/create"
           style={{ float: "right" }}
         >
-          Create Recommendation Request
+          Create Article
         </Button>
       );
     }
@@ -39,11 +39,8 @@ export default function RecommendationRequestsIndexPage() {
     <BasicLayout>
       <div className="pt-2">
         {createButton()}
-        <h1>Recommendation Requests</h1>
-        <RecommendationRequestTable
-          recommendationRequests={recommendationRequests}
-          currentUser={currentUser}
-        />
+        <h1>Articles</h1>
+        <ArticleTable articles={articles} currentUser={currentUser} />
       </div>
     </BasicLayout>
   );

@@ -3,14 +3,15 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { http, HttpResponse } from "msw";
 
-import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
+import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
+import { articleFixtures } from "fixtures/articleFixtures";
 
 export default {
-  title: "pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage",
-  component: UCSBDiningCommonsMenuItemCreatePage,
+  title: "pages/Articles/ArticlesEditPage",
+  component: ArticlesEditPage,
 };
 
-const Template = () => <UCSBDiningCommonsMenuItemCreatePage storybook={true} />;
+const Template = () => <ArticlesEditPage storybook={true} />;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -25,7 +26,16 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.post("/api/ucsbdiningcommonsmenuitem/post", () => {
+    http.get("/api/articles", () => {
+      return HttpResponse.json(articleFixtures.threeArticles[0], {
+        status: 200,
+      });
+    }),
+    http.put("/api/articles", () => {
+      return HttpResponse.json({}, { status: 200 });
+    }),
+    http.put("/api/articles", (req) => {
+      window.alert("PUT: " + req.url + " and body: " + req.body);
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
