@@ -76,6 +76,7 @@ export default function AppNavbar({
                   </Nav.Link>
                   <Nav.Link as={Link} to="/menuitemreview">
                     MenuItemReview
+                  </Nav.Link>
                   <Nav.Link as={Link} to="/UCSBDiningCommonsMenuItem">
                     Items
                   </Nav.Link>
