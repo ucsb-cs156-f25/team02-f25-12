@@ -6,39 +6,40 @@ import { useCurrentUser, hasRole } from "main/utils/useCurrentUser";
 import HelpRequestTable from "main/components/HelpRequests/HelpRequestTable";
 
 export default function HelpRequestIndexPage() {
-  const { data: currentUser } = useCurrentUser();
+  const currentUser = useCurrentUser();
+
+  const createButton = () => {
+    if (hasRole(currentUser, "ROLE_ADMIN")) {
+      return (
+        <Button
+          variant="primary"
+          href="/helprequests/create"
+          style={{ float: "right" }}
+        >
+          Create HelpRequest
+        </Button>
+      );
+    }
+  };
 
   const {
-    data: helpRequests,
+    data: requests,
     error: _error,
     status: _status,
   } = useBackend(
+    // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/helprequests/all"],
     { method: "GET", url: "/api/helprequests/all" },
-    []
+    [],
   );
-
-  const showCreate = hasRole(currentUser, "ROLE_ADMIN");
 
   return (
     <BasicLayout>
       <div className="pt-2">
-        {showCreate && (
-          <Button
-            variant="primary"
-            href="/helprequests/create"
-            style={{ float: "right" }}
-          >
-            Create HelpRequest
-          </Button>
-        )}
-        <h1>HelpRequests</h1>
-        <HelpRequestTable
-          requests={helpRequests ?? []}
-          currentUser={currentUser}
-        />
+        {createButton()}
+        <h1>HelpRequest</h1>
+        <HelpRequestTable requests={requests} currentUser={currentUser} />
       </div>
     </BasicLayout>
   );
 }
-

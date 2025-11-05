@@ -70,7 +70,7 @@ describe("HelpRequestIndexPage tests", () => {
     expect(button).toHaveAttribute("style", "float: right;");
   });
 
-  test("renders three requests correctly for regular user", async () => {
+  test("renders three helprequests correctly for regular user", async () => {
     // arrange
     setupUserOnly();
     const queryClient = new QueryClient();
@@ -181,5 +181,3 @@ describe("HelpRequestIndexPage tests", () => {
     });
   });
 });
-
-
