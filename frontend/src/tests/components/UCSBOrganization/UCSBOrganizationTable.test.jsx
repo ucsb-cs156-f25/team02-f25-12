@@ -89,25 +89,25 @@ describe("UCSBOrganizationTable tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent(row0.orgCode);
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`)).toHaveTextContent(
-      String(row0.orgTranslationShort),
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
+    ).toHaveTextContent(String(row0.orgTranslationShort));
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgTranslation`),
     ).toHaveTextContent(row0.orgTranslation);
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent(row0.inactive);
-    
+
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       String(row1.id),
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent(row1.orgCode);
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`)).toHaveTextContent(
-      String(row1.orgTranslationShort),
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`),
+    ).toHaveTextContent(String(row1.orgTranslationShort));
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgTranslation`),
     ).toHaveTextContent(row1.orgTranslation);

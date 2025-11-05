@@ -21,7 +21,7 @@ const articleFixtures = {
       title: "Second Article",
       url: "https://www.nytimes.com/2025/11/03/us/politics/stephen-miller-activist-battle-free-speech.html",
       explanation: "The second article.",
-      email: "yibinjiang@ucsb.edu",
+      email: "yibinjiang2@ucsb.edu",
       dateAdded: "2025-11-03T19:56:00",
     },
     {
@@ -29,7 +29,7 @@ const articleFixtures = {
       title: "Third Article",
       url: "https://www.nytimes.com/2025/11/03/us/politics/james-comey-prosecution-trump.html",
       explanation: "The third article.",
-      email: "yibinjiang@ucsb.edu",
+      email: "yibinjiang3@ucsb.edu",
       dateAdded: "2025-11-03T19:57:00",
     },
   ],

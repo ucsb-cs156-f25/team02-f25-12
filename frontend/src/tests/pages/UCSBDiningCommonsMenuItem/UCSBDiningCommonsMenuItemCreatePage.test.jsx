@@ -64,9 +64,9 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     const queryClient = new QueryClient();
     const item = {
       id: 1,
-      diningCommonsCode : "ortega",
-      name : "Taco",
-      station : "Grill",
+      diningCommonsCode: "ortega",
+      name: "Taco",
+      station: "Grill",
     };
 
     axiosMock.onPost("/api/ucsbdiningcommonsmenuitem/post").reply(202, item);
@@ -89,7 +89,7 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     const diningCommonsCodeInput = screen.getByLabelText("Dining Commons Code");
     expect(diningCommonsCodeInput).toBeInTheDocument();
 
-     const stationInput = screen.getByLabelText("Station");
+    const stationInput = screen.getByLabelText("Station");
     expect(diningCommonsCodeInput).toBeInTheDocument();
 
     const createButton = screen.getByText("Create");
@@ -103,14 +103,12 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      name : "Taco",
-      diningCommonsCode : "Ortega",
-      station : "Grill"
+      name: "Taco",
+      diningCommonsCode: "Ortega",
+      station: "Grill",
     });
 
-    expect(mockToast).toBeCalledWith(
-      "New item Created - id: 1 name: Taco",
-    );
+    expect(mockToast).toBeCalledWith("New item Created - id: 1 name: Taco");
     expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitem" });
   });
 });
