@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
 export default function UCSBDiningCommonsMenuTable({
-  items, 
+  items,
   currentUser,
   testIdPrefix = "UCSBDiningCommonsMenuItemTable",
 }) {
@@ -48,10 +48,10 @@ export default function UCSBDiningCommonsMenuTable({
       header: "Name",
       accessorKey: "name",
     },
-    { 
-        header: "Station",
-        accessorKey: "station",
-    }
+    {
+      header: "Station",
+      accessorKey: "station",
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
@@ -61,7 +61,5 @@ export default function UCSBDiningCommonsMenuTable({
     );
   }
 
-  return (
-    <OurTable data={items} columns={columns} testid={testIdPrefix} />
-  );
+  return <OurTable data={items} columns={columns} testid={testIdPrefix} />;
 }
