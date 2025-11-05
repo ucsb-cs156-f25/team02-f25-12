@@ -5,19 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBDiningCommonsMenuItemUtils";
+} from "main/utils/recommendationRequestUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBDiningCommonsMenuTable({
-  items, 
+export default function RecommendationRequestTable({
+  recommendationRequests,
   currentUser,
-  testIdPrefix = "UCSBDiningCommonsMenuItemTable",
+  testIdPrefix = "RecommendationRequestTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsbdiningcommonsmenuitem/edit/${cell.row.original.id}`);
+    navigate(`/recommendationRequests/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +25,7 @@ export default function UCSBDiningCommonsMenuTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsbdiningcommonsmenuitem/all"],
+    ["/api/recommendationRequests/all"],
   );
   // Stryker restore all
 
@@ -41,17 +41,25 @@ export default function UCSBDiningCommonsMenuTable({
     },
 
     {
-      header: "Dining Commons Code",
-      accessorKey: "diningCommonsCode",
+      header: "Requester Email",
+      accessorKey: "requesterEmail",
     },
     {
-      header: "Name",
-      accessorKey: "name",
+      header: "Professor Email",
+      accessorKey: "professorEmail",
     },
-    { 
-        header: "Station",
-        accessorKey: "station",
-    }
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Date Requested (iso format)",
+      accessorKey: "dateRequested",
+    },
+    {
+      header: "Date Needed (iso format)",
+      accessorKey: "dateNeeded",
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
@@ -62,6 +70,10 @@ export default function UCSBDiningCommonsMenuTable({
   }
 
   return (
-    <OurTable data={items} columns={columns} testid={testIdPrefix} />
+    <OurTable
+      data={recommendationRequests}
+      columns={columns}
+      testid={testIdPrefix}
+    />
   );
 }

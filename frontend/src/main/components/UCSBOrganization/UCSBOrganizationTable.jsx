@@ -2,22 +2,19 @@ import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 
 import { useBackendMutation } from "main/utils/useBackend";
-import {
-  cellToAxiosParamsDelete,
-  onDeleteSuccess,
-} from "main/utils/UCSBDiningCommonsMenuItemUtils";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/UCSBOrganizationUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBDiningCommonsMenuTable({
-  items, 
+export default function UCSBOrganizationTable({
+  organizations,
   currentUser,
-  testIdPrefix = "UCSBDiningCommonsMenuItemTable",
+  testIdPrefix = "UCSBOrganizationTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsbdiningcommonsmenuitem/edit/${cell.row.original.id}`);
+    navigate(`/ucsborganization/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +22,7 @@ export default function UCSBDiningCommonsMenuTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsbdiningcommonsmenuitem/all"],
+    ["/api/ucsborganization/all"],
   );
   // Stryker restore all
 
@@ -41,17 +38,21 @@ export default function UCSBDiningCommonsMenuTable({
     },
 
     {
-      header: "Dining Commons Code",
-      accessorKey: "diningCommonsCode",
+      header: "orgCode",
+      accessorKey: "orgCode",
     },
     {
-      header: "Name",
-      accessorKey: "name",
+      header: "orgTranslationShort",
+      accessorKey: "orgTranslationShort",
     },
-    { 
-        header: "Station",
-        accessorKey: "station",
-    }
+    {
+      header: "orgTranslation",
+      accessorKey: "orgTranslation",
+    },
+    {
+      header: "inactive",
+      accessorKey: "inactive",
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
@@ -62,6 +63,6 @@ export default function UCSBDiningCommonsMenuTable({
   }
 
   return (
-    <OurTable data={items} columns={columns} testid={testIdPrefix} />
+    <OurTable data={organizations} columns={columns} testid={testIdPrefix} />
   );
 }

@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
-import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
-import UCSBDiningCommonsMenuItemTable from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemTable";
+import { recommendationRequestFixtures } from "fixtures/recommendationRequestFixtures";
+import RecommendationRequestTable from "main/components/RecommendationRequests/RecommendationRequestTable";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
@@ -16,12 +16,26 @@ vi.mock("react-router", async () => {
   };
 });
 
-describe("UCSBDiningCommonsMenuItemTable tests", () => {
+describe("RecommendationRequestTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Dining Commons Code", "Name", "Station"];
-  const expectedFields = ["id", "diningCommonsCode", "name", "station"];
-  const testId = "UCSBDiningCommonsMenuItemTable";
+  const expectedHeaders = [
+    "id",
+    "Requester Email",
+    "Professor Email",
+    "Explanation",
+    "Date Requested (iso format)",
+    "Date Needed (iso format)",
+  ];
+  const expectedFields = [
+    "id",
+    "requesterEmail",
+    "professorEmail",
+    "explanation",
+    "dateRequested",
+    "dateNeeded",
+  ];
+  const testId = "RecommendationRequestTable";
 
   test("renders empty table correctly", () => {
     // arrange
@@ -31,10 +45,18 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBDiningCommonsMenuItemTable items={[]} currentUser={currentUser} />
+          <RecommendationRequestTable
+            recommendationRequests={[]}
+            currentUser={currentUser}
+          />
         </MemoryRouter>
       </QueryClientProvider>,
     );
+
+    const table = screen.getByRole("table");
+    expect(table).toBeInTheDocument();
+
+    let assertionExecuted = false;
 
     // assert
     expectedHeaders.forEach((headerText) => {
@@ -47,7 +69,10 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
         `${testId}-cell-row-0-col-${field}`,
       );
       expect(fieldElement).not.toBeInTheDocument();
+      assertionExecuted = true;
     });
+
+    expect(assertionExecuted).toBe(true);
   });
 
   test("Has the expected column headers, content and buttons for admin user", () => {
@@ -58,8 +83,10 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBDiningCommonsMenuItemTable
-            items={ucsbDiningCommonsMenuItemFixtures.threeItems}
+          <RecommendationRequestTable
+            recommendationRequests={
+              recommendationRequestFixtures.threeRecommendationRequests
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -81,15 +108,15 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
       "1",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cheeseburger");
+      screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
+    ).toHaveTextContent("bob_gaucho@ucsb.edu");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-name`),
-    ).toHaveTextContent("Veggie Burger");
+      screen.getByTestId(`${testId}-cell-row-1-col-explanation`),
+    ).toHaveTextContent("Recommendation request for PHD program at UCSB");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -112,8 +139,10 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBDiningCommonsMenuItemTable
-            items={ucsbDiningCommonsMenuItemFixtures.threeItems}
+          <RecommendationRequestTable
+            recommendationRequests={
+              recommendationRequestFixtures.threeRecommendationRequests
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -135,15 +164,15 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
       "1",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cheeseburger");
+      screen.getByTestId(`${testId}-cell-row-0-col-professorEmail`),
+    ).toHaveTextContent("pconrad@ucsb.edu");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
       "2",
     );
     expect(
-      screen.getByTestId(`${testId}-cell-row-1-col-name`),
-    ).toHaveTextContent("Veggie Burger");
+      screen.getByTestId(`${testId}-cell-row-1-col-requesterEmail`),
+    ).toHaveTextContent("alexeubank@uscb.edu");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
@@ -157,8 +186,10 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBDiningCommonsMenuItemTable
-            items={ucsbDiningCommonsMenuItemFixtures.threeItems}
+          <RecommendationRequestTable
+            recommendationRequests={
+              recommendationRequestFixtures.threeRecommendationRequests
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -170,8 +201,8 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
       await screen.findByTestId(`${testId}-cell-row-0-col-id`),
     ).toHaveTextContent("1");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cheeseburger");
+      screen.getByTestId(`${testId}-cell-row-0-col-explanation`),
+    ).toHaveTextContent("recommendation request for the team02 project");
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -183,7 +214,9 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
 
     // assert - check that the navigate function was called with the expected path
     await waitFor(() =>
-      expect(mockedNavigate).toHaveBeenCalledWith("/ucsbdiningcommonsmenuitem/edit/1"),
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        "/recommendationRequests/edit/1",
+      ),
     );
   });
 
@@ -193,15 +226,17 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/UCSBDiningCommonsMenuItem")
-      .reply(200, { message: "Item deleted" });
+      .onDelete("/api/recommendationRequests")
+      .reply(200, { message: "RecommendationRequest deleted" });
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBDiningCommonsMenuItemTable
-            items={ucsbDiningCommonsMenuItemFixtures.threeItems}
+          <RecommendationRequestTable
+            recommendationRequests={
+              recommendationRequestFixtures.threeRecommendationRequests
+            }
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -213,8 +248,8 @@ describe("UCSBDiningCommonsMenuItemTable tests", () => {
       await screen.findByTestId(`${testId}-cell-row-0-col-id`),
     ).toHaveTextContent("1");
     expect(
-      screen.getByTestId(`${testId}-cell-row-0-col-name`),
-    ).toHaveTextContent("Cheeseburger");
+      screen.getByTestId(`${testId}-cell-row-0-col-requesterEmail`),
+    ).toHaveTextContent("bob_gaucho@ucsb.edu");
 
     const deleteButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
