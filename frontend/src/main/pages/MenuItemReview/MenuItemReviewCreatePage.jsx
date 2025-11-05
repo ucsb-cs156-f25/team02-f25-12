@@ -12,8 +12,8 @@ export default function MenuItemReviewCreatePage({ storybook = false }) {
       itemId: menuItemReview.itemId,
       reviewerEmail: menuItemReview.reviewerEmail,
       stars: menuItemReview.stars,
-      comments: menuItemReview.comments,
       dateReviewed: menuItemReview.dateReviewed,
+      comments: menuItemReview.comments,
     },
   });
 
@@ -42,7 +42,6 @@ export default function MenuItemReviewCreatePage({ storybook = false }) {
     <BasicLayout>
       <div className="pt-2">
         <h1>Create New MenuItemReview</h1>
-
         <MenuItemReviewForm submitAction={onSubmit} />
       </div>
     </BasicLayout>
