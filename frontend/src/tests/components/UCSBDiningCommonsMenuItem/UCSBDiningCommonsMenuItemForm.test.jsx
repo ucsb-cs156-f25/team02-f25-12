@@ -38,18 +38,21 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.queryByTestId(`${testId}-diningCommonsCode`)).toBeInTheDocument();
+    expect(
+      screen.queryByTestId(`${testId}-diningCommonsCode`),
+    ).toBeInTheDocument();
     expect(screen.queryByTestId(`${testId}-name`)).toBeInTheDocument();
     expect(screen.queryByTestId(`${testId}-station`)).toBeInTheDocument();
     expect(screen.queryByTestId(`${testId}-submit`)).toBeInTheDocument();
-
   });
 
   test("renders correctly when passing in initialContents", async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Router>
-          <UCSBDiningCommonsMenuItemForm initialContents={ucsbDiningCommonsMenuItemFixtures.oneItem} />
+          <UCSBDiningCommonsMenuItemForm
+            initialContents={ucsbDiningCommonsMenuItemFixtures.oneItem}
+          />
         </Router>
       </QueryClientProvider>,
     );
@@ -96,7 +99,7 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
 
     await screen.findByText(/diningCommonsCode is required./);
     expect(screen.getByText(/name is required./)).toBeInTheDocument();
-        expect(screen.getByText(/station is required./)).toBeInTheDocument();
+    expect(screen.getByText(/station is required./)).toBeInTheDocument();
 
     const nameInput = screen.getByTestId(`${testId}-diningCommonsCode`);
     fireEvent.change(nameInput, { target: { value: "a".repeat(256) } });
