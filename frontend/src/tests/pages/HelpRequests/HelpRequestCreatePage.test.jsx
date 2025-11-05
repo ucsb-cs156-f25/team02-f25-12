@@ -243,6 +243,4 @@ describe("UserTable tests", () => {
     // params may put id in params or data depending on implementation; ensure id is present
     expect(params.params?.id || params.data?.id).toBe(1);
   });
-
-
 });
