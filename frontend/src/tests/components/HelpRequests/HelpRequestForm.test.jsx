@@ -18,7 +18,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>,
+      </Router>
     );
 
     // basic presence checks
@@ -26,21 +26,21 @@ describe("HelpRequestForm tests", () => {
     await screen.findByTestId("HelpRequestForm-submit");
     expect(screen.getByTestId("HelpRequestForm-submit")).toBeInTheDocument();
     const submitBtn = await screen.findByTestId("HelpRequestForm-submit");
-    expect(submitBtn).toHaveTextContent(/^Create$/);
+    expect(submitBtn).toHaveTextContent(/^Create$/);  
   });
 
   test("renders correctly with initialContents (edit mode)", async () => {
     render(
       <Router>
         <HelpRequestForm initialContents={helpRequestFixtures.oneRequest} />
-      </Router>,
+      </Router>
     );
 
     const submitBtn = await screen.findByTestId("HelpRequestForm-submit");
     expect(submitBtn).toHaveTextContent(/^Update$/);
     expect(screen.getByText(/Id/i)).toBeInTheDocument();
     expect(screen.getByTestId("HelpRequestForm-id")).toHaveValue(
-      String(helpRequestFixtures.oneRequest.id),
+      String(helpRequestFixtures.oneRequest.id)
     );
   });
 
@@ -48,16 +48,18 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>,
+      </Router>
     );
 
     // fields
     const emailField = await screen.findByTestId(
-      "HelpRequestForm-requesterEmail",
+      "HelpRequestForm-requesterEmail"
     );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const torField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+    const torField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom"
+    );
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
     const solvedCheckbox = screen.getByTestId("HelpRequestForm-solved");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
@@ -71,44 +73,40 @@ describe("HelpRequestForm tests", () => {
     // pattern messages come from the component's validation config
     await screen.findByText(/Enter a valid email\./i);
     expect(
-      screen.getByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i),
+      screen.getByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i)
     ).toBeInTheDocument();
 
-    fireEvent.change(requestTimeField, {
-      target: { value: "2025-10-30T14:30" },
+  fireEvent.change(requestTimeField, { target: { value: "2025-10-30T14:30" } });
+
+  const makeAllButEmailValid = () => {
+    fireEvent.change(emailField, { target: { value: "student@ucsb.edu" } });
+    fireEvent.change(requestTimeField, { target: { value: "2025-10-29T14:30" } });
+    fireEvent.change(teamIdField, { target: { value: "f25-5pm-1" } });
+    fireEvent.change(torField, { target: { value: "Table 4" } });
+    fireEvent.change(explanationField, {
+      target: { value: "Need help with unit tests" },
     });
+    fireEvent.click(solvedCheckbox); // optional
+  };
 
-    const makeAllButEmailValid = () => {
-      fireEvent.change(emailField, { target: { value: "student@ucsb.edu" } });
-      fireEvent.change(requestTimeField, {
-        target: { value: "2025-10-29T14:30" },
-      });
-      fireEvent.change(teamIdField, { target: { value: "f25-5pm-1" } });
-      fireEvent.change(torField, { target: { value: "Table 4" } });
-      fireEvent.change(explanationField, {
-        target: { value: "Need help with unit tests" },
-      });
-      fireEvent.click(solvedCheckbox); // optional
-    };
+  // 2) kill missing `$` (trailing garbage should be invalid)
+  makeAllButEmailValid();
+  fireEvent.change(emailField, { target: { value: "foo@bar.com EXTRA" } });
+  fireEvent.click(submitButton);
+  await screen.findByText(/Enter a valid email\./i);
 
-    // 2) kill missing `$` (trailing garbage should be invalid)
-    makeAllButEmailValid();
-    fireEvent.change(emailField, { target: { value: "foo@bar.com EXTRA" } });
-    fireEvent.click(submitButton);
-    await screen.findByText(/Enter a valid email\./i);
-
-    // 3) kill missing `^` (leading garbage should be invalid)
-    makeAllButEmailValid();
-    fireEvent.change(emailField, { target: { value: "GARBAGE foo@bar.com" } });
-    fireEvent.click(submitButton);
-    await screen.findByText(/Enter a valid email\./i);
+  // 3) kill missing `^` (leading garbage should be invalid)
+  makeAllButEmailValid();
+  fireEvent.change(emailField, { target: { value: "GARBAGE foo@bar.com" } });
+  fireEvent.click(submitButton);
+  await screen.findByText(/Enter a valid email\./i);
   });
 
   test("shows required messages on missing input", async () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>,
+      </Router>
     );
 
     const submitButton = await screen.findByTestId("HelpRequestForm-submit");
@@ -116,10 +114,16 @@ describe("HelpRequestForm tests", () => {
 
     // required messages from the component
     await screen.findByText(/Email is required\./i);
-    expect(screen.getByText(/Request time is required\./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Request time is required\./i)
+    ).toBeInTheDocument();
     expect(screen.getByText(/Team ID is required\./i)).toBeInTheDocument();
-    expect(screen.getByText(/This field is required\./i)).toBeInTheDocument(); // tableOrBreakoutRoom
-    expect(screen.getByText(/Explanation is required\./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/This field is required\./i)
+    ).toBeInTheDocument(); // tableOrBreakoutRoom
+    expect(
+      screen.getByText(/Explanation is required\./i)
+    ).toBeInTheDocument();
   });
 
   test("no error messages on good input and submitAction called", async () => {
@@ -128,24 +132,24 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm submitAction={mockSubmitAction} />
-      </Router>,
+      </Router>
     );
 
     const emailField = await screen.findByTestId(
-      "HelpRequestForm-requesterEmail",
+      "HelpRequestForm-requesterEmail"
     );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const torField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+    const torField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom"
+    );
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
     const solvedCheckbox = screen.getByTestId("HelpRequestForm-solved");
     const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
     // valid inputs
     fireEvent.change(emailField, { target: { value: "student@ucsb.edu" } });
-    fireEvent.change(requestTimeField, {
-      target: { value: "2025-10-29T14:30" },
-    });
+    fireEvent.change(requestTimeField, { target: { value: "2025-10-29T14:30" } });
     fireEvent.change(teamIdField, { target: { value: "f25-5pm-1" } });
     fireEvent.change(torField, { target: { value: "Table 4" } });
     fireEvent.change(explanationField, {
@@ -159,22 +163,22 @@ describe("HelpRequestForm tests", () => {
 
     // ensure no error text present
     expect(
-      screen.queryByText(/Enter a valid email\./i),
+      screen.queryByText(/Enter a valid email\./i)
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i),
+      screen.queryByText(/Use ISO format \(e\.g\., 2025-10-30T14:30\)\./i)
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Request time is required\./i),
+      screen.queryByText(/Request time is required\./i)
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Team ID is required\./i),
+      screen.queryByText(/Team ID is required\./i)
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/This field is required\./i),
+      screen.queryByText(/This field is required\./i)
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByText(/Explanation is required\./i),
+      screen.queryByText(/Explanation is required\./i)
     ).not.toBeInTheDocument();
   });
 
@@ -182,7 +186,7 @@ describe("HelpRequestForm tests", () => {
     render(
       <Router>
         <HelpRequestForm />
-      </Router>,
+      </Router>
     );
 
     const cancelButton = await screen.findByTestId("HelpRequestForm-cancel");
