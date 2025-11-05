@@ -4,7 +4,7 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { http, HttpResponse } from "msw";
 
 import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
-import { articleFixtures } from "fixtures/articlesFixtures";
+import { articleFixtures } from "fixtures/articleFixtures";
 
 export default {
   title: "pages/Articles/ArticlesEditPage",
