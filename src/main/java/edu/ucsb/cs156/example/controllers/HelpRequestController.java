@@ -121,8 +121,10 @@ public class HelpRequestController extends ApiController {
   public HelpRequest updateHelpRequest(
       @Parameter(name = "id") @RequestParam Long id, @RequestBody @Valid HelpRequest incoming) {
 
-    HelpRequest existing = helpRequestRepository.findById(id)
-      .orElseThrow(() -> new EntityNotFoundException(HelpRequest.class, id));
+    HelpRequest existing =
+        helpRequestRepository
+            .findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(HelpRequest.class, id));
 
     existing.setRequesterEmail(incoming.getRequesterEmail());
     existing.setTeamId(incoming.getTeamId());
@@ -132,6 +134,7 @@ public class HelpRequestController extends ApiController {
     existing.setSolved(incoming.getSolved());
 
     helpRequestRepository.save(existing);
+
     return existing;
   }
 
