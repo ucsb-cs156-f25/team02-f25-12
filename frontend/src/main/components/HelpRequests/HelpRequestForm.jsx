@@ -18,7 +18,6 @@ function HelpRequestForm({
   const navigate = useNavigate();
   const computedLabel = initialContents ? "Update" : buttonLabel;
 
-
   // For explanation, see: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime
   // Note that even this complex regex may still need some tweaks
 
@@ -26,7 +25,6 @@ function HelpRequestForm({
   const isodate_regex =
     /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
   // Stryker restore Regex
-
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
@@ -59,29 +57,32 @@ function HelpRequestForm({
                 required: "Email is required.",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Enter a valid email."
-                }
+                  message: "Enter a valid email.",
+                },
               })}
             />
             <Form.Control.Feedback type="invalid">
-             {errors.requesterEmail?.message}
+              {errors.requesterEmail?.message}
             </Form.Control.Feedback>
-
           </Form.Group>
         </Col>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="requestTime">Request Time (iso format)</Form.Label>
+            <Form.Label htmlFor="requestTime">
+              Request Time (iso format)
+            </Form.Label>
             <Form.Control
               data-testid="HelpRequestForm-requestTime"
               id="requestTime"
               type="text"
-                isInvalid={Boolean(errors.requestTime)}
-            {...register("requestTime", {
+              isInvalid={Boolean(errors.requestTime)}
+              {...register("requestTime", {
                 required: "Request time is required.",
-                pattern: { value: isodate_regex, message: "Use ISO format (e.g., 2025-10-30T14:30)." },
-            })}
-
+                pattern: {
+                  value: isodate_regex,
+                  message: "Use ISO format (e.g., 2025-10-30T14:30).",
+                },
+              })}
             />
             <Form.Control.Feedback type="invalid">
               {errors.requestTime?.message}
@@ -118,7 +119,6 @@ function HelpRequestForm({
               id="tableOrBreakoutRoom"
               type="text"
               isInvalid={Boolean(errors.tableOrBreakoutRoom)}
-
               {...register("tableOrBreakoutRoom", {
                 required: "This field is required.",
               })}
@@ -145,14 +145,14 @@ function HelpRequestForm({
             </Form.Control.Feedback>
           </Form.Group>
         </Col>
-        </Row>
+      </Row>
       <Row>
         <Col>
           <Form.Group className="mb-3">
             <Form.Check
               data-testid="HelpRequestForm-solved"
               id="solved"
-              type="checkbox"             
+              type="checkbox"
               label="Solved"
               isInvalid={Boolean(errors.solved)}
               {...register("solved")}
