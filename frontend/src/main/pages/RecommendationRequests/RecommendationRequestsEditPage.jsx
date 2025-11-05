@@ -1,47 +1,48 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router";
-import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
+import RecommendationRequestForm from "main/components/RecommendationRequests/RecommendationRequestForm";
 import { Navigate } from "react-router";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function UCSBOrganizationEditPage({ storybook = false }) {
+export default function RecommendationRequestEditPage({ storybook = false }) {
   let { id } = useParams();
 
   const {
-    data: organization,
+    data: recommendationRequest,
     _error,
     _status,
   } = useBackend(
     // Stryker disable next-line all : don't test internal caching of React Query
-    [`/api/ucsborganization?id=${id}`],
+    [`/api/recommendationrequests?id=${id}`],
     {
       // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
       method: "GET",
-      url: `/api/ucsborganization`,
+      url: `/api/recommendationrequests`,
       params: {
         id,
       },
     },
   );
 
-  const objectToAxiosPutParams = (organization) => ({
-    url: "/api/ucsborganization",
+  const objectToAxiosPutParams = (recommendationRequest) => ({
+    url: "/api/recommendationrequests",
     method: "PUT",
     params: {
-      id: organization.id,
+      id: recommendationRequest.id,
     },
     data: {
-      orgCode: organization.orgCode,
-      orgTranslationShort: organization.orgTranslationShort,
-      orgTranslation: organization.orgTranslation,
-      inactive: organization.inactive,
+      requesterEmail: recommendationRequest.requesterEmail,
+      professorEmail: recommendationRequest.professorEmail,
+      explanation: recommendationRequest.explanation,
+      dateRequested: recommendationRequest.dateRequested,
+      dateNeeded: recommendationRequest.dateNeeded,
     },
   });
 
-  const onSuccess = (organization) => {
+  const onSuccess = (recommendationRequest) => {
     toast(
-      `UCSBOrganization Updated - id: ${organization.id} orgCode: ${organization.orgCode}`,
+      `RecommendationRequest Updated - id: ${recommendationRequest.id} requesterEmail: ${recommendationRequest.requesterEmail}`,
     );
   };
 
@@ -49,7 +50,7 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/ucsborganization?id=${id}`],
+    [`/api/recommendationrequests?id=${id}`],
   );
 
   const { isSuccess } = mutation;
@@ -59,18 +60,18 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
   };
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/ucsborganization" />;
+    return <Navigate to="/recommendationrequests" />;
   }
 
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Edit Organization</h1>
-        {organization && (
-          <UCSBOrganizationForm
+        <h1>Edit Recommendation Request</h1>
+        {recommendationRequest && (
+          <RecommendationRequestForm
             submitAction={onSubmit}
             buttonLabel={"Update"}
-            initialContents={organization}
+            initialContents={recommendationRequest}
           />
         )}
       </div>

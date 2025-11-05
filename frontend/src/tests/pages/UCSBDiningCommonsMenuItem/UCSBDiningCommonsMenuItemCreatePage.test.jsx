@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import UCSBOrganizationCreatePage from "main/pages/UCSBOrganization/UCSBOrganizationCreatePage";
+import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 
@@ -30,7 +30,7 @@ vi.mock("react-router", async (importOriginal) => {
   };
 });
 
-describe("UCSBOrganizationCreatePage tests", () => {
+describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   beforeEach(() => {
@@ -50,80 +50,65 @@ describe("UCSBOrganizationCreatePage tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationCreatePage />
+          <UCSBDiningCommonsMenuItemCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("orgCode")).toBeInTheDocument();
+      expect(screen.getByLabelText("Name")).toBeInTheDocument();
     });
   });
 
-  test("on submit, makes request to backend, and redirects to /ucsborganization", async () => {
+  test("on submit, makes request to backend, and redirects to /UCSBDiningCommonsMenuItem", async () => {
     const queryClient = new QueryClient();
-    const organization = {
-      id: 3,
-      orgCode: "DS",
-      orgTranslationShort: "Data Science Club",
-      orgTranslation: "UCSB Data Science Club",
-      inactive: false,
+    const item = {
+      id: 1,
+      diningCommonsCode: "ortega",
+      name: "Taco",
+      station: "Grill",
     };
 
-    axiosMock.onPost("/api/ucsborganization/post").reply(202, organization);
+    axiosMock.onPost("/api/ucsbdiningcommonsmenuitem/post").reply(202, item);
 
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationCreatePage />
+          <UCSBDiningCommonsMenuItemCreatePage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByLabelText("orgCode")).toBeInTheDocument();
+      expect(screen.getByLabelText("Name")).toBeInTheDocument();
     });
 
-    const orgCode = screen.getByLabelText("orgCode");
-    expect(orgCode).toBeInTheDocument();
+    const nameInput = screen.getByLabelText("Name");
+    expect(nameInput).toBeInTheDocument();
 
-    const orgTranslationShort = screen.getByLabelText("orgTranslationShort");
-    expect(orgTranslationShort).toBeInTheDocument();
+    const diningCommonsCodeInput = screen.getByLabelText("Dining Commons Code");
+    expect(diningCommonsCodeInput).toBeInTheDocument();
 
-    const orgTranslation = screen.getByLabelText("orgTranslation");
-    expect(orgTranslation).toBeInTheDocument();
-
-    const inactive = screen.getByLabelText("inactive");
-    expect(inactive).toBeInTheDocument();
+    const stationInput = screen.getByLabelText("Station");
+    expect(diningCommonsCodeInput).toBeInTheDocument();
 
     const createButton = screen.getByText("Create");
     expect(createButton).toBeInTheDocument();
 
-    fireEvent.change(orgCode, { target: { value: "DS" } });
-    fireEvent.change(orgTranslationShort, {
-      target: { value: "Data Science Club" },
-    });
-    fireEvent.change(orgTranslation, {
-      target: { value: "UCSB Data Science Club" },
-    });
-    fireEvent.change(inactive, {
-      target: { value: false },
-    });
+    fireEvent.change(nameInput, { target: { value: "Taco" } });
+    fireEvent.change(diningCommonsCodeInput, { target: { value: "Ortega" } });
+    fireEvent.change(stationInput, { target: { value: "Grill" } });
     fireEvent.click(createButton);
 
     await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
     expect(axiosMock.history.post[0].params).toEqual({
-      orgCode: "DS",
-      orgTranslationShort: "Data Science Club",
-      orgTranslation: "UCSB Data Science Club",
-      inactive: false,
+      name: "Taco",
+      diningCommonsCode: "Ortega",
+      station: "Grill",
     });
 
-    // assert - check that the toast was called with the expected message
-    expect(mockToast).toBeCalledWith(
-      "New UCSBOrganization Created - id: 3 orgCode: DS",
-    );
-    expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
+    expect(mockToast).toBeCalledWith("New item Created - id: 1 name: Taco");
+    expect(mockNavigate).toBeCalledWith({ to: "/ucsbdiningcommonsmenuitem" });
   });
 });
