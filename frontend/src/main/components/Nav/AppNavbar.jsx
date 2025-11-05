@@ -81,7 +81,7 @@ export default function AppNavbar({
                     MenuItemReview
                   </Nav.Link>
                   <Nav.Link as={Link} to="/helprequests">
-                    Placeholder
+                    HelpRequests
                   </Nav.Link>
 
                   <Nav.Link as={Link} to="/UCSBDiningCommonsMenuItem">
