@@ -19,8 +19,22 @@ vi.mock("react-router", async () => {
 describe("ArticleTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Title", "Url", "Explanation", "Email", "Date Added"];
-  const expectedFields = ["id", "title", "url", "explanation", "email", "dateAdded"];
+  const expectedHeaders = [
+    "id",
+    "Title",
+    "Url",
+    "Explanation",
+    "Email",
+    "Date Added",
+  ];
+  const expectedFields = [
+    "id",
+    "title",
+    "url",
+    "explanation",
+    "email",
+    "dateAdded",
+  ];
   const testId = "ArticleTable";
 
   test("renders empty table correctly", () => {
@@ -89,7 +103,9 @@ describe("ArticleTable tests", () => {
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-url`),
-    ).toHaveTextContent("https://www.nytimes.com/2025/11/03/us/politics/stephen-miller-activist-battle-free-speech.html");
+    ).toHaveTextContent(
+      "https://www.nytimes.com/2025/11/03/us/politics/stephen-miller-activist-battle-free-speech.html",
+    );
 
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
@@ -143,7 +159,9 @@ describe("ArticleTable tests", () => {
     );
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-url`),
-    ).toHaveTextContent("https://www.nytimes.com/2025/11/03/us/politics/stephen-miller-activist-battle-free-speech.html");
+    ).toHaveTextContent(
+      "https://www.nytimes.com/2025/11/03/us/politics/stephen-miller-activist-battle-free-speech.html",
+    );
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
