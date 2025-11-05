@@ -5,19 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBDiningCommonsMenuItemUtils";
+} from "main/utils/articleUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBDiningCommonsMenuTable({
-  items, 
+export default function ArticleTable({
+  articles,
   currentUser,
-  testIdPrefix = "UCSBDiningCommonsMenuItemTable",
+  testIdPrefix = "ArticleTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsbdiningcommonsmenuitem/edit/${cell.row.original.id}`);
+    navigate(`/articles/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +25,7 @@ export default function UCSBDiningCommonsMenuTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsbdiningcommonsmenuitem/all"],
+    ["/api/articles/all"],
   );
   // Stryker restore all
 
@@ -41,17 +41,25 @@ export default function UCSBDiningCommonsMenuTable({
     },
 
     {
-      header: "Dining Commons Code",
-      accessorKey: "diningCommonsCode",
+      header: "Title",
+      accessorKey: "title",
     },
     {
-      header: "Name",
-      accessorKey: "name",
+      header: "Url",
+      accessorKey: "url",
     },
-    { 
-        header: "Station",
-        accessorKey: "station",
-    }
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Email",
+      accessorKey: "email",
+    },
+    {
+      header: "Date Added",
+      accessorKey: "dateAdded",
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
@@ -62,6 +70,6 @@ export default function UCSBDiningCommonsMenuTable({
   }
 
   return (
-    <OurTable data={items} columns={columns} testid={testIdPrefix} />
+    <OurTable data={articles} columns={columns} testid={testIdPrefix} />
   );
 }
