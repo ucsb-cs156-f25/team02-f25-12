@@ -1,14 +1,14 @@
 import React from "react";
-import UCSBDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm";
-import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
+import RecommendationRequestForm from "main/components/RecommendationRequests/RecommendationRequestForm";
+import { recommendationRequestFixtures } from "fixtures/recommendationRequestFixtures";
 
 export default {
-  title: "components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm",
-  component: UCSBDiningCommonsMenuItemForm
+  title: "components/RecommendationRequests/RecommendationRequestForm",
+  component: RecommendationRequestForm,
 };
 
 const Template = (args) => {
-  return <UCSBDiningCommonsMenuItemForm {...args} />;
+  return <RecommendationRequestForm {...args} />;
 };
 
 export const Create = Template.bind({});
@@ -24,7 +24,7 @@ Create.args = {
 export const Update = Template.bind({});
 
 Update.args = {
-  initialContents: ucsbDiningCommonsMenuItemFixtures.oneItem,
+  initialContents: recommendationRequestFixtures.oneRecommendationRequest,
   buttonLabel: "Update",
   submitAction: (data) => {
     console.log("Submit was clicked with data: ", data);
