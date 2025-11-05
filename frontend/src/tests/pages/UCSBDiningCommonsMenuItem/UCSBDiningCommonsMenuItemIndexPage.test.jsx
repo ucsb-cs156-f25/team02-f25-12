@@ -100,14 +100,10 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
     const name = screen.getByText("Cheeseburger");
     expect(name).toBeInTheDocument();
 
-    const diningCommonsCode = screen.getByText(
-      "ortega",
-    );
+    const diningCommonsCode = screen.getByText("ortega");
     expect(diningCommonsCode).toBeInTheDocument();
 
-    const station = screen.getByText(
-      "Grill",
-    );
+    const station = screen.getByText("Grill");
     expect(station).toBeInTheDocument();
 
     // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
@@ -187,8 +183,12 @@ describe("UCSBDiningCommonsMenuItemIndexPage tests", () => {
     await waitFor(() => {
       expect(axiosMock.history.delete.length).toBe(1);
     });
-    expect(axiosMock.history.delete[0].url).toBe("/api/ucsbdiningcommonsmenuitem");
-    expect(axiosMock.history.delete[0].url).toBe("/api/ucsbdiningcommonsmenuitem");
+    expect(axiosMock.history.delete[0].url).toBe(
+      "/api/ucsbdiningcommonsmenuitem",
+    );
+    expect(axiosMock.history.delete[0].url).toBe(
+      "/api/ucsbdiningcommonsmenuitem",
+    );
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
 });

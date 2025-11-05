@@ -1,4 +1,7 @@
-import { onDeleteSuccess,cellToAxiosParamsDelete } from "main/utils/UCSBOrganizationUtils";
+import {
+  onDeleteSuccess,
+  cellToAxiosParamsDelete,
+} from "main/utils/UCSBOrganizationUtils";
 import mockConsole from "tests/testutils/mockConsole";
 
 const mockToast = vi.fn();

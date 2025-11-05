@@ -38,8 +38,12 @@ describe("UCSBOrganizationForm tests", () => {
     });
 
     expect(screen.queryByTestId(`${testId}-orgCode`)).toBeInTheDocument();
-    expect(screen.queryByTestId(`${testId}-orgTranslationShort`)).toBeInTheDocument();
-    expect(screen.queryByTestId(`${testId}-orgTranslation`)).toBeInTheDocument();
+    expect(
+      screen.queryByTestId(`${testId}-orgTranslationShort`),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId(`${testId}-orgTranslation`),
+    ).toBeInTheDocument();
     expect(screen.queryByTestId(`${testId}-inactive`)).toBeInTheDocument();
   });
 
@@ -95,7 +99,9 @@ describe("UCSBOrganizationForm tests", () => {
     fireEvent.click(submitButton);
 
     await screen.findByText(/orgCode is required/);
-    expect(screen.getByText(/orgTranslationShort is required/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/orgTranslationShort is required/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/orgTranslation is required/)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-submit`)).toBeInTheDocument();
 
