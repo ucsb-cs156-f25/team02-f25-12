@@ -104,9 +104,13 @@ describe("MenuItemReviewCreatePage tests", () => {
     expect(createButton).toBeInTheDocument();
 
     fireEvent.change(itemIdInput, { target: { value: "2" } });
-    fireEvent.change(reviewerEmailInput, { target: { value: "user@ucsb.edu" } });
+    fireEvent.change(reviewerEmailInput, {
+      target: { value: "user@ucsb.edu" },
+    });
     fireEvent.change(starsInput, { target: { value: "3" } });
-    fireEvent.change(dateReviewedInput, { target: { value: "2022-02-02T00:00" } });
+    fireEvent.change(dateReviewedInput, {
+      target: { value: "2022-02-02T00:00" },
+    });
     fireEvent.change(commentsInput, { target: { value: "it was okay" } });
     fireEvent.click(createButton);
 
