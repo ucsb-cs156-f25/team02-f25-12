@@ -143,6 +143,7 @@ function App() {
             exact
             path="/articles/create"
             element={<ArticlesCreatePage />}
+          />
         </>
       )}
       {hasRole(currentUser, "ROLE_USER") && (
