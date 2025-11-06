@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f25/team02-f25-12
 owner: ucsb-cs156-f25
 repo_name: team02-f25-12
-pull_requests: [{"author":{"id":"U_kgDOC6IUpQ","is_bot":false,"login":"joshua-dev-codes","name":""},"headRefName":"fixing-main-format","number":117,"title":"fixed formatting again and spelling","url":"https://github.com/ucsb-cs156-f25/team02-f25-12/pull/117"}]
+pull_requests: [{"author":{"id":"U_kgDODXgFtA","is_bot":false,"login":"yibinjiang04","name":""},"headRefName":"bj-articles-integration-tests","number":124,"title":"bj - add integration tests for Articles Controller endpoints","url":"https://github.com/ucsb-cs156-f25/team02-f25-12/pull/124"}]
