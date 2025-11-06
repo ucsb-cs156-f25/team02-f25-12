@@ -68,7 +68,9 @@ describe("MenuItemReviewEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit MenuItemReview");
-      expect(screen.queryByTestId("MenuItemReview-itemId")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("MenuItemReview-itemId"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -84,14 +86,16 @@ describe("MenuItemReviewEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/menuitemreview", { params: { id: 17 } }).reply(200, {
-        id: 17,
-        itemId: 33,
-        reviewerEmail: "JackL@ucsb.edu",
-        stars: 3,
-        dateReviewed: "2025-10-26T12:00:00",
-        comments: "It was average",
-      });
+      axiosMock
+        .onGet("/api/menuitemreview", { params: { id: 17 } })
+        .reply(200, {
+          id: 17,
+          itemId: 33,
+          reviewerEmail: "JackL@ucsb.edu",
+          stars: 3,
+          dateReviewed: "2025-10-26T12:00:00",
+          comments: "It was average",
+        });
       axiosMock.onPut("/api/menuitemreview").reply(200, {
         id: 17,
         itemId: 2,
@@ -99,7 +103,7 @@ describe("MenuItemReviewEditPage tests", () => {
         stars: 4,
         dateReviewed: "2025-10-26T12:30:00",
         comments: "It was good",
-        });
+      });
     });
 
     afterEach(() => {
@@ -124,9 +128,13 @@ describe("MenuItemReviewEditPage tests", () => {
 
       const idField = screen.getByTestId("MenuItemReviewForm-id");
       const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
-      const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+      const reviewerEmailField = screen.getByTestId(
+        "MenuItemReviewForm-reviewerEmail",
+      );
       const starsField = screen.getByTestId("MenuItemReviewForm-stars");
-      const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
+      const dateReviewedField = screen.getByTestId(
+        "MenuItemReviewForm-dateReviewed",
+      );
       const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
 
       const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
@@ -166,7 +174,7 @@ describe("MenuItemReviewEditPage tests", () => {
       fireEvent.change(commentsField, {
         target: { value: "it was good" },
       });
-      
+
       fireEvent.click(submitButton);
 
       await waitFor(() => expect(mockToast).toHaveBeenCalled());
@@ -189,59 +197,5 @@ describe("MenuItemReviewEditPage tests", () => {
       ); // posted object
       expect(mockNavigate).toHaveBeenCalledWith({ to: "/menuitemreview" });
     });
-
-    // test("Changes when you click Update", async () => {
-    //   render(
-    //     <QueryClientProvider client={queryClient}>
-    //       <MemoryRouter>
-    //         <MenuItemReviewEditPage />
-    //       </MemoryRouter>
-    //     </QueryClientProvider>,
-    //   );
-
-    //   await screen.findByTestId("MenuItemReviewForm-id");
-
-    //   const idField = screen.getByTestId("MenuItemReviewForm-id");
-    //   const itemIdField = screen.getByTestId("MenuItemReviewForm-itemId");
-    //   const reviewerEmailField = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
-    //   const starsField = screen.getByTestId("MenuItemReviewForm-stars");
-    //   const dateReviewedField = screen.getByTestId("MenuItemReviewForm-dateReviewed");
-    //   const commentsField = screen.getByTestId("MenuItemReviewForm-comments");
-
-    //   const submitButton = screen.getByTestId("MenuItemReviewForm-submit");
-
-    //   expect(idField).toBeInTheDocument();
-    //   expect(idField).toHaveValue("17");
-
-    //   expect(itemIdField).toBeInTheDocument();
-    //   expect(itemIdField).toHaveValue(33);
-
-    //   expect(reviewerEmailField).toBeInTheDocument();
-    //   expect(reviewerEmailField).toHaveValue("JackL@ucsb.edu");
-
-    //   expect(starsField).toBeInTheDocument();
-    //   expect(starsField).toHaveValue(3);
-
-    //   expect(dateReviewedField).toBeInTheDocument();
-    //   expect(dateReviewedField).toHaveValue("2025-10-26T12:00");
-
-    //   expect(commentsField).toBeInTheDocument();
-    //   expect(commentsField).toHaveValue("It was average");
-
-    //   expect(submitButton).toHaveTextContent("Update");
-
-    //   fireEvent.change(nameField, {
-    //     target: { value: "Freebirds World Burrito" },
-    //   });
-    //   fireEvent.change(descriptionField, { target: { value: "Big Burritos" } });
-
-    //   fireEvent.click(submitButton);
-
-    //   await waitFor(() => expect(mockToast).toBeCalled());
-    //   expect(mockToast).toBeCalledWith(
-    //     "Restaurant Updated - id: 17 name: Freebirds World Burrito",
-    //   );
-    //   expect(mockNavigate).toBeCalledWith({ to: "/menuitemreview" });
-    // });
   });
 });
