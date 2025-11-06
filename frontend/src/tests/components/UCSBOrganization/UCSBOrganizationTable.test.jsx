@@ -147,16 +147,16 @@ describe("UCSBOrganizationTable tests", () => {
       ).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent(
-      String(row0.orgCode),
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+    ).toHaveTextContent(String(row0.orgCode));
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
     ).toHaveTextContent(row0.orgTranslationShort);
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)).toHaveTextContent(
-      String(row1.orgCode),
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
+    ).toHaveTextContent(String(row1.orgCode));
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`),
     ).toHaveTextContent(row1.orgTranslationShort);
@@ -234,6 +234,8 @@ describe("UCSBOrganizationTable tests", () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
-    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: row0.orgCode });
+    expect(axiosMock.history.delete[0].params).toEqual({
+      orgCode: row0.orgCode,
+    });
   });
 });

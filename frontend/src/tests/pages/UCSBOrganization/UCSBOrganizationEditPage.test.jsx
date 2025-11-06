@@ -24,7 +24,7 @@ vi.mock("react-router", async (importOriginal) => {
   return {
     ...originalModule,
     useParams: vi.fn(() => ({
-      orgCode: "DS"
+      orgCode: "DS",
     })),
     Navigate: vi.fn((x) => {
       mockNavigate(x);
