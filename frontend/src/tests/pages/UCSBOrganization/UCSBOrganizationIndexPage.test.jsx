@@ -94,7 +94,9 @@ describe("UCSBOrganizationIndexPage tests", () => {
       "SBH",
     );
 
-    const createButton = screen.queryByRole("button", { name: /Create UCSBOrganization/i });
+    const createButton = screen.queryByRole("button", {
+      name: /Create UCSBOrganization/i,
+    });
     expect(createButton).not.toBeInTheDocument();
 
     const orgCode = screen.getByText("TT");

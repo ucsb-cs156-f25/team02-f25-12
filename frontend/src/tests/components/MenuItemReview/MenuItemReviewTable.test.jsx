@@ -26,7 +26,7 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <MenuItemReviewTable
-            menuItemReview={menuItemReviewFixtures.threeReview}
+            reviews={menuItemReviewFixtures.threeReview}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -86,7 +86,7 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <MenuItemReviewTable
-            menuItemReview={menuItemReviewFixtures.threeReview}
+            reviews={menuItemReviewFixtures.threeReview}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -149,7 +149,7 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <MenuItemReviewTable
-            menuItemReview={menuItemReviewFixtures.threeReview}
+            reviews={menuItemReviewFixtures.threeReview}
             currentUser={currentUser}
           />
         </MemoryRouter>
@@ -181,7 +181,7 @@ describe("UserTable tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
-      .onDelete("/api/menuitemreviews")
+      .onDelete("/api/menuitemreview")
       .reply(200, { message: "Date deleted" });
 
     // act - render the component
@@ -189,7 +189,7 @@ describe("UserTable tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           <MenuItemReviewTable
-            menuItemReview={menuItemReviewFixtures.threeReview}
+            reviews={menuItemReviewFixtures.threeReview}
             currentUser={currentUser}
           />
         </MemoryRouter>
