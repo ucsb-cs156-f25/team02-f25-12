@@ -37,6 +37,7 @@ export default function RecommendationRequestEditPage({ storybook = false }) {
       explanation: recommendationRequest.explanation,
       dateRequested: recommendationRequest.dateRequested,
       dateNeeded: recommendationRequest.dateNeeded,
+      done: recommendationRequest.done,
     },
   });
 
