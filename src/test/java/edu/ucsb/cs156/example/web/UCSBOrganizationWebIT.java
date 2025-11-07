@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UCSBOrganizationWebIT extends WebTestCase {
   @Test
-  public void admin_user_can_create_edit_delete_restaurant() throws Exception {
+  public void admin_user_can_create_edit_delete_ucsborganization() throws Exception {
     setupUser(true);
 
     page.getByText("UCSBOrganization").click();
@@ -38,7 +38,7 @@ public class UCSBOrganizationWebIT extends WebTestCase {
     assertThat(page.getByTestId("UCSBOrganizationTable-cell-row-0-col-inactive")).hasText("false");
 
     page.getByTestId("UCSBOrganizationTable-cell-row-0-col-Edit-button").click();
-    assertThat(page.getByText("Edit UCSBOrganization")).isVisible();
+    assertThat(page.getByText("Edit Organization")).isVisible();
     page.getByTestId("UCSBOrganizationForm-orgTranslationShort").fill("Theta T");
     page.getByTestId("UCSBOrganizationForm-orgTranslation").fill("Theta Tau");
     page.getByTestId("UCSBOrganizationForm-inactive").check();
@@ -62,7 +62,7 @@ public class UCSBOrganizationWebIT extends WebTestCase {
   }
 
   @Test
-  public void regular_user_cannot_create_restaurant() throws Exception {
+  public void regular_user_cannot_create_ucsborganization() throws Exception {
     setupUser(false);
 
     page.getByText("UCSBOrganization").click();
