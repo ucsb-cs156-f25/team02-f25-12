@@ -97,6 +97,7 @@ describe("RecommendationRequestEditPage tests", () => {
           explanation: "recommendation request for the team02 project",
           dateRequested: "2025-11-01T12:23",
           dateNeeded: "2026-02-01T12:00",
+          done: false,
         });
       axiosMock.onPut("/api/recommendationrequests").reply(200, {
         id: 17,
@@ -105,6 +106,7 @@ describe("RecommendationRequestEditPage tests", () => {
         explanation: "team02 project",
         dateRequested: "2025-11-01T12:53",
         dateNeeded: "2026-02-01T12:41",
+        done: true,
       });
     });
 
@@ -136,6 +138,7 @@ describe("RecommendationRequestEditPage tests", () => {
         "Date Requested (iso format)",
       );
       const dateNeededField = screen.getByLabelText("Date Needed (iso format)");
+      const doneCheckbox = screen.getByLabelText("Done");
       const submitButton = screen.getByText("Update");
 
       expect(idField).toBeInTheDocument();
@@ -152,6 +155,8 @@ describe("RecommendationRequestEditPage tests", () => {
       expect(dateRequestedField).toHaveValue("2025-11-01T12:23");
       expect(dateNeededField).toBeInTheDocument();
       expect(dateNeededField).toHaveValue("2026-02-01T12:00");
+      expect(doneCheckbox).toBeInTheDocument();
+      expect(doneCheckbox).not.toBeChecked();
       expect(submitButton).toHaveTextContent("Update");
 
       fireEvent.change(requesterEmailField, {
@@ -169,6 +174,7 @@ describe("RecommendationRequestEditPage tests", () => {
       fireEvent.change(dateNeededField, {
         target: { value: "2026-02-01T12:41" },
       });
+      fireEvent.click(doneCheckbox);
       fireEvent.click(submitButton);
 
       await waitFor(() => expect(mockToast).toBeCalled());
@@ -187,6 +193,7 @@ describe("RecommendationRequestEditPage tests", () => {
           explanation: "team02 project",
           dateRequested: "2025-11-01T12:53",
           dateNeeded: "2026-02-01T12:41",
+          done: true,
         }),
       ); // posted object
       expect(mockNavigate).toBeCalledWith({ to: "/recommendationrequests" });
