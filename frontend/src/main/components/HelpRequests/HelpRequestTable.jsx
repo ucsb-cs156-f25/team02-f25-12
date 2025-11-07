@@ -5,19 +5,15 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBDiningCommonsMenuItemUtils";
+} from "main/utils/helpRequestUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function UCSBDiningCommonsMenuTable({
-  items, 
-  currentUser,
-  testIdPrefix = "UCSBDiningCommonsMenuItemTable",
-}) {
+export default function HelpRequestTable({ requests, currentUser }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsbdiningcommonsmenuitem/edit/${cell.row.original.id}`);
+    navigate(`/helprequests/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +21,7 @@ export default function UCSBDiningCommonsMenuTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsbdiningcommonsmenuitem/all"],
+    ["/api/helprequests/all"],
   );
   // Stryker restore all
 
@@ -39,29 +35,43 @@ export default function UCSBDiningCommonsMenuTable({
       header: "id",
       accessorKey: "id", // accessor is the "key" in the data
     },
-
     {
-      header: "Dining Commons Code",
-      accessorKey: "diningCommonsCode",
+      header: "Email",
+      accessorKey: "requesterEmail",
     },
     {
-      header: "Name",
-      accessorKey: "name",
+      header: "Request Time",
+      accessorKey: "requestTime",
     },
-    { 
-        header: "Station",
-        accessorKey: "station",
-    }
+    {
+      header: "Team",
+      accessorKey: "teamId",
+    },
+    {
+      header: "Table or Breakout Room",
+      accessorKey: "tableOrBreakoutRoom",
+    },
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Solved",
+      accessorKey: "solved",
+      cell: ({ getValue }) => (getValue() ? "Yes" : "No"),
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
-    columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
+      ButtonColumn("Edit", "primary", editCallback, "HelpRequestTable"),
+    );
+    columns.push(
+      ButtonColumn("Delete", "danger", deleteCallback, "HelpRequestTable"),
     );
   }
 
   return (
-    <OurTable data={items} columns={columns} testid={testIdPrefix} />
+    <OurTable data={requests} columns={columns} testid={"HelpRequestTable"} />
   );
 }
