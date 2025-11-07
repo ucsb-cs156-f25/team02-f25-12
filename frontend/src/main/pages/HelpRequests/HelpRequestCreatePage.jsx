@@ -15,12 +15,13 @@ export default function HelpRequestCreatePage({ storybook = false }) {
       explanation: helpRequest.explanation,
       solved: helpRequest.solved,
       requestTime: helpRequest.requestTime,
-
     },
   });
 
   const onSuccess = (helpRequest) => {
-    toast(`New HelpRequest Created - id: ${helpRequest.id} requesterEmail: ${helpRequest.requesterEmail}`);
+    toast(
+      `New HelpRequest Created - id: ${helpRequest.id} requesterEmail: ${helpRequest.requesterEmail}`,
+    );
   };
 
   const mutation = useBackendMutation(
@@ -50,4 +51,3 @@ export default function HelpRequestCreatePage({ storybook = false }) {
     </BasicLayout>
   );
 }
-

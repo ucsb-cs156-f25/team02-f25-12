@@ -10,7 +10,7 @@ import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
 export default function MenuItemReviewTable({
-  menuItemReview,
+  reviews,
   currentUser,
   testIdPrefix = "MenuItemReviewTable",
 }) {
@@ -68,7 +68,5 @@ export default function MenuItemReviewTable({
     );
   }
 
-  return (
-    <OurTable data={menuItemReview} columns={columns} testid={testIdPrefix} />
-  );
+  return <OurTable data={reviews} columns={columns} testid={testIdPrefix} />;
 }

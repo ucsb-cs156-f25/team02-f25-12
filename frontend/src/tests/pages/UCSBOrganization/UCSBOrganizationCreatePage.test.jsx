@@ -63,7 +63,6 @@ describe("UCSBOrganizationCreatePage tests", () => {
   test("on submit, makes request to backend, and redirects to /ucsborganization", async () => {
     const queryClient = new QueryClient();
     const organization = {
-      id: 3,
       orgCode: "DS",
       orgTranslationShort: "Data Science Club",
       orgTranslation: "UCSB Data Science Club",
@@ -122,7 +121,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
 
     // assert - check that the toast was called with the expected message
     expect(mockToast).toBeCalledWith(
-      "New UCSBOrganization Created - id: 3 orgCode: DS",
+      "New UCSBOrganization Created - orgCode: DS",
     );
     expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
   });

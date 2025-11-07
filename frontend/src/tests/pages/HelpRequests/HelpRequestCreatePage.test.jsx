@@ -54,9 +54,7 @@ describe("HelpRequestCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId("HelpRequestForm-teamId"),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId("HelpRequestForm-teamId")).toBeInTheDocument();
     });
   });
 
@@ -69,7 +67,7 @@ describe("HelpRequestCreatePage tests", () => {
       tableOrBreakoutRoom: "Table 3",
       requestTime: "2025-10-30T14:30",
       explanation: "Need help.",
-      solved: true
+      solved: true,
     };
 
     axiosMock.onPost("/api/helprequests/post").reply(202, helpRequest);
@@ -83,14 +81,16 @@ describe("HelpRequestCreatePage tests", () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId("HelpRequestForm-teamId"),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId("HelpRequestForm-teamId")).toBeInTheDocument();
     });
-    
+
     const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
-    const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
-    const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+    const requesterEmailField = screen.getByTestId(
+      "HelpRequestForm-requesterEmail",
+    );
+    const tableOrBreakoutRoomField = screen.getByTestId(
+      "HelpRequestForm-tableOrBreakoutRoom",
+    );
     const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
     const explanationField = screen.getByTestId("HelpRequestForm-explanation");
     const solvedField = screen.getByTestId("HelpRequestForm-solved");
@@ -110,14 +110,14 @@ describe("HelpRequestCreatePage tests", () => {
     });
 
     fireEvent.change(requestTimeField, {
-      target: { value: "2025-10-30T14:30" }, 
+      target: { value: "2025-10-30T14:30" },
     });
 
     fireEvent.change(explanationField, {
       target: { value: "Need help." },
     });
 
-    fireEvent.click(solvedField); 
+    fireEvent.click(solvedField);
 
     expect(submitButton).toBeInTheDocument();
 
@@ -131,7 +131,7 @@ describe("HelpRequestCreatePage tests", () => {
       tableOrBreakoutRoom: "Table 3",
       requestTime: "2025-10-30T14:30",
       explanation: "Need help.",
-      solved: true
+      solved: true,
     });
 
     expect(mockToast).toBeCalledWith(

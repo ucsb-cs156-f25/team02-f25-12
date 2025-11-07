@@ -84,17 +84,19 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`),
-      ).toHaveTextContent("1");
+        screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+      ).toHaveTextContent("TT");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
-      "3",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
+    ).toHaveTextContent("ACM");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-2-col-orgCode`),
+    ).toHaveTextContent("SBH");
 
-    const createButton = screen.queryByRole("button", { name: /Create UCSBOrganization/i });
+    const createButton = screen.queryByRole("button", {
+      name: /Create UCSBOrganization/i,
+    });
     expect(createButton).not.toBeInTheDocument();
 
     const orgCode = screen.getByText("TT");
@@ -161,7 +163,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
       .reply(200, ucsbOrganizationFixtures.threeOrganizations);
     axiosMock
       .onDelete("/api/ucsborganization")
-      .reply(200, "UCSBOrganization with id 1 was deleted");
+      .reply(200, "UCSBOrganization with orgCode TT was deleted");
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -173,13 +175,13 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+        screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
       ).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+    ).toHaveTextContent("TT");
 
     const deleteButton = await screen.findByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
@@ -190,7 +192,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     await waitFor(() => {
       expect(mockToast).toBeCalledWith(
-        "UCSBOrganization with id 1 was deleted",
+        "UCSBOrganization with orgCode TT was deleted",
       );
     });
 
@@ -199,6 +201,6 @@ describe("UCSBOrganizationIndexPage tests", () => {
     });
     expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
     expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
-    expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
+    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "TT" });
   });
 });

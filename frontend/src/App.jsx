@@ -115,9 +115,13 @@ function App() {
           />
         </>
       )}
-            {hasRole(currentUser, "ROLE_USER") && (
+      {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/helprequests" element={<HelpRequestIndexPage />} />
+          <Route
+            exact
+            path="/helprequests"
+            element={<HelpRequestIndexPage />}
+          />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
@@ -197,7 +201,11 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/menuitemreview" element={<MenuItemReviewIndexPage />} />
+          <Route
+            exact
+            path="/menuitemreview"
+            element={<MenuItemReviewIndexPage />}
+          />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
@@ -213,7 +221,7 @@ function App() {
             element={<MenuItemReviewCreatePage />}
           />
         </>
-      )}      
+      )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
           <Route
@@ -227,7 +235,7 @@ function App() {
         <>
           <Route
             exact
-            path="/ucsborganization/edit/:id"
+            path="/ucsborganization/edit/:orgCode"
             element={<UCSBOrganizationEditPage />}
           />
           <Route
