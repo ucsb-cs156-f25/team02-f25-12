@@ -121,18 +121,21 @@ import org.springframework.web.bind.annotation.RestController;
   public HelpRequest updateHelpRequest(
       @Parameter(name = &quot;id&quot;) @RequestParam Long id, @RequestBody @Valid HelpRequest incoming) {
 
-<span class="fc" id="L124">    HelpRequest existing = helpRequestRepository.findById(id)</span>
-<span class="fc" id="L125">      .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+<span class="fc" id="L124">    HelpRequest existing =</span>
+        helpRequestRepository
+<span class="fc" id="L126">            .findById(id)</span>
+<span class="fc" id="L127">            .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
 
-<span class="fc" id="L127">    existing.setRequesterEmail(incoming.getRequesterEmail());</span>
-<span class="fc" id="L128">    existing.setTeamId(incoming.getTeamId());</span>
-<span class="fc" id="L129">    existing.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
-<span class="fc" id="L130">    existing.setRequestTime(incoming.getRequestTime());</span>
-<span class="fc" id="L131">    existing.setExplanation(incoming.getExplanation());</span>
-<span class="fc" id="L132">    existing.setSolved(incoming.getSolved());</span>
+<span class="fc" id="L129">    existing.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L130">    existing.setTeamId(incoming.getTeamId());</span>
+<span class="fc" id="L131">    existing.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
+<span class="fc" id="L132">    existing.setRequestTime(incoming.getRequestTime());</span>
+<span class="fc" id="L133">    existing.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L134">    existing.setSolved(incoming.getSolved());</span>
 
-<span class="fc" id="L134">    helpRequestRepository.save(existing);</span>
-<span class="fc" id="L135">    return existing;</span>
+<span class="fc" id="L136">    helpRequestRepository.save(existing);</span>
+
+<span class="fc" id="L138">    return existing;</span>
   }
 
   /**
@@ -145,13 +148,13 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
   @DeleteMapping(&quot;&quot;)
   public Object deleteHelpRequest(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L148">    HelpRequest helpRequest =</span>
+<span class="fc" id="L151">    HelpRequest helpRequest =</span>
         helpRequestRepository
-<span class="fc" id="L150">            .findById(id)</span>
-<span class="fc" id="L151">            .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+<span class="fc" id="L153">            .findById(id)</span>
+<span class="fc" id="L154">            .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
 
-<span class="fc" id="L153">    helpRequestRepository.delete(helpRequest);</span>
-<span class="fc" id="L154">    return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
+<span class="fc" id="L156">    helpRequestRepository.delete(helpRequest);</span>
+<span class="fc" id="L157">    return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
