@@ -38,7 +38,7 @@ public class UCSBOrganizationWebIT extends WebTestCase {
     assertThat(page.getByTestId("UCSBOrganizationTable-cell-row-0-col-inactive")).hasText("false");
 
     page.getByTestId("UCSBOrganizationTable-cell-row-0-col-Edit-button").click();
-    assertThat(page.getByText("Edit UCSBOrganization")).isVisible();
+    assertThat(page.getByText("Edit Organization")).isVisible();
     page.getByTestId("UCSBOrganizationForm-orgTranslationShort").fill("Theta T");
     page.getByTestId("UCSBOrganizationForm-orgTranslation").fill("Theta Tau");
     page.getByTestId("UCSBOrganizationForm-inactive").check();
