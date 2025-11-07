@@ -5,7 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import * as Toast from "react-toastify";
-import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/helpRequestUtils";
+import {
+  onDeleteSuccess,
+  cellToAxiosParamsDelete,
+} from "main/utils/helpRequestUtils";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -35,8 +38,24 @@ describe("UserTable tests", () => {
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = ["id", "Email", "Request Time", "Table or Breakout Room",  "Team", "Explanation", "Solved"];
-    const expectedFields = ["id", "requesterEmail", "requestTime", "tableOrBreakoutRoom", "teamId", "explanation", "solved"];
+    const expectedHeaders = [
+      "id",
+      "Email",
+      "Request Time",
+      "Table or Breakout Room",
+      "Team",
+      "Explanation",
+      "Solved",
+    ];
+    const expectedFields = [
+      "id",
+      "requesterEmail",
+      "requestTime",
+      "tableOrBreakoutRoom",
+      "teamId",
+      "explanation",
+      "solved",
+    ];
     const testId = "HelpRequestTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -61,7 +80,6 @@ describe("UserTable tests", () => {
     expect(["Yes", "No"]).toContain(solved0.textContent);
     expect(["Yes", "No"]).toContain(solved1.textContent);
 
-
     const editButton = screen.queryByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -72,7 +90,6 @@ describe("UserTable tests", () => {
     );
     expect(deleteButton).not.toBeInTheDocument();
   });
-
 
   test("Has the expected colum headers and content for adminUser", () => {
     const currentUser = currentUserFixtures.adminUser;
@@ -88,8 +105,24 @@ describe("UserTable tests", () => {
       </QueryClientProvider>,
     );
 
-    const expectedHeaders = ["id", "Email", "Request Time", "Table or Breakout Room",  "Team", "Explanation", "Solved"];
-    const expectedFields = ["id", "requesterEmail", "requestTime", "tableOrBreakoutRoom", "teamId", "explanation", "solved"];
+    const expectedHeaders = [
+      "id",
+      "Email",
+      "Request Time",
+      "Table or Breakout Room",
+      "Team",
+      "Explanation",
+      "Solved",
+    ];
+    const expectedFields = [
+      "id",
+      "requesterEmail",
+      "requestTime",
+      "tableOrBreakoutRoom",
+      "teamId",
+      "explanation",
+      "solved",
+    ];
     const testId = "HelpRequestTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -114,7 +147,6 @@ describe("UserTable tests", () => {
     expect(["Yes", "No"]).toContain(solved0.textContent);
     expect(["Yes", "No"]).toContain(solved1.textContent);
 
-
     const editButton = screen.getByTestId(
       `${testId}-cell-row-0-col-Edit-button`,
     );
@@ -127,7 +159,7 @@ describe("UserTable tests", () => {
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
   });
-  
+
   test("Edit button navigates to the edit page for admin user", async () => {
     const currentUser = currentUserFixtures.adminUser;
 
@@ -202,7 +234,7 @@ describe("UserTable tests", () => {
     await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
     expect(axiosMock.history.delete[0].params).toEqual({ id: 1 });
   });
-    test("helpRequestUtils: delete endpoint uses correct url", async () => {
+  test("helpRequestUtils: delete endpoint uses correct url", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock.onDelete("/api/helprequests").reply(200, { message: "ok" });
 
@@ -235,14 +267,12 @@ describe("UserTable tests", () => {
 
     axiosMock.restore();
   });
-    test("helpRequestUtils: cellToAxiosParamsDelete returns correct url and params", () => {
+  test("helpRequestUtils: cellToAxiosParamsDelete returns correct url and params", () => {
     const fakeCell = { row: { original: { id: 1 } } };
     const params = cellToAxiosParamsDelete(fakeCell);
     expect(params).toBeDefined();
-    expect(params.url).toBe("/api/helprequests");   // catches mutant changing the string literal
+    expect(params.url).toBe("/api/helprequests"); // catches mutant changing the string literal
     // params may put id in params or data depending on implementation; ensure id is present
     expect(params.params?.id || params.data?.id).toBe(1);
   });
-
-
 });

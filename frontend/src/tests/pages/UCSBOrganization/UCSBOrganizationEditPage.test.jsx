@@ -24,7 +24,7 @@ vi.mock("react-router", async (importOriginal) => {
   return {
     ...originalModule,
     useParams: vi.fn(() => ({
-      id: 17,
+      orgCode: "DS",
     })),
     Navigate: vi.fn((x) => {
       mockNavigate(x);
@@ -47,7 +47,7 @@ describe("UCSBOrganizationEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/ucsborganization", { params: { id: 17 } })
+        .onGet("/api/ucsborganization", { params: { orgCode: "TT" } })
         .timeout();
     });
 
@@ -87,16 +87,14 @@ describe("UCSBOrganizationEditPage tests", () => {
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
       axiosMock
-        .onGet("/api/ucsborganization", { params: { id: 17 } })
+        .onGet("/api/ucsborganization", { params: { orgCode: "DS" } })
         .reply(200, {
-          id: 3,
           orgCode: "DS",
           orgTranslationShort: "Data Science Club",
           orgTranslation: "UCSB Data Science Club",
           inactive: false,
         });
       axiosMock.onPut("/api/ucsborganization").reply(200, {
-        id: 3,
         orgCode: "DS",
         orgTranslationShort: "Data Science Club",
         orgTranslation: "UCSB Data Science Club",
@@ -122,9 +120,8 @@ describe("UCSBOrganizationEditPage tests", () => {
         </QueryClientProvider>,
       );
 
-      await screen.findByTestId("UCSBOrganizationForm-id");
+      await screen.findByTestId("UCSBOrganizationForm-orgCode");
 
-      const idField = screen.getByTestId("UCSBOrganizationForm-id");
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
       const orgTranslationShortField = screen.getByTestId(
         "UCSBOrganizationForm-orgTranslationShort",
@@ -135,8 +132,6 @@ describe("UCSBOrganizationEditPage tests", () => {
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
-      expect(idField).toBeInTheDocument();
-      expect(idField).toHaveValue("3");
       expect(orgCodeField).toBeInTheDocument();
       expect(orgCodeField).toHaveValue("DS");
       expect(orgTranslationShortField).toBeInTheDocument();
@@ -164,13 +159,13 @@ describe("UCSBOrganizationEditPage tests", () => {
 
       await waitFor(() => expect(mockToast).toBeCalled());
       expect(mockToast).toBeCalledWith(
-        "UCSBOrganization Updated - id: 3 orgCode: DS",
+        "UCSBOrganization Updated - orgCode: DS",
       );
 
       expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
 
       expect(axiosMock.history.put.length).toBe(1); // times called
-      expect(axiosMock.history.put[0].params).toEqual({ id: 3 });
+      expect(axiosMock.history.put[0].params).toEqual({ orgCode: "DSC" });
       expect(axiosMock.history.put[0].data).toBe(
         JSON.stringify({
           orgCode: "DSC",
@@ -190,9 +185,8 @@ describe("UCSBOrganizationEditPage tests", () => {
         </QueryClientProvider>,
       );
 
-      await screen.findByTestId("UCSBOrganizationForm-id");
+      await screen.findByTestId("UCSBOrganizationForm-orgCode");
 
-      const idField = screen.getByTestId("UCSBOrganizationForm-id");
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
       const orgTranslationShortField = screen.getByTestId(
         "UCSBOrganizationForm-orgTranslationShort",
@@ -203,7 +197,6 @@ describe("UCSBOrganizationEditPage tests", () => {
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
-      expect(idField).toHaveValue("3");
       expect(orgCodeField).toHaveValue("DS");
       expect(orgTranslationShortField).toHaveValue("Data Science Club");
       expect(orgTranslationField).toHaveValue("UCSB Data Science Club");
@@ -225,7 +218,7 @@ describe("UCSBOrganizationEditPage tests", () => {
 
       await waitFor(() => expect(mockToast).toBeCalled());
       expect(mockToast).toBeCalledWith(
-        "UCSBOrganization Updated - id: 3 orgCode: DS",
+        "UCSBOrganization Updated - orgCode: DS",
       );
       expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
     });
