@@ -26,6 +26,7 @@ describe("RecommendationRequestTable tests", () => {
     "Explanation",
     "Date Requested (iso format)",
     "Date Needed (iso format)",
+    "Done"
   ];
   const expectedFields = [
     "id",
@@ -34,6 +35,7 @@ describe("RecommendationRequestTable tests", () => {
     "explanation",
     "dateRequested",
     "dateNeeded",
+    "done"
   ];
   const testId = "RecommendationRequestTable";
 

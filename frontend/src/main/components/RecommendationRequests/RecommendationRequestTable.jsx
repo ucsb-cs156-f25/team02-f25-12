@@ -60,6 +60,10 @@ export default function RecommendationRequestTable({
       header: "Date Needed (iso format)",
       accessorKey: "dateNeeded",
     },
+    {
+      header: "Done",
+      accessorKey: "done",
+    },
   ];
 
   if (hasRole(currentUser, "ROLE_ADMIN")) {
