@@ -5,11 +5,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.LocalDateTime;
-
-import org.h2.command.dml.Help;
-import org.hibernate.type.descriptor.java.LocalDateTimeJavaType;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.ucsb.cs156.example.entities.HelpRequest;
 import edu.ucsb.cs156.example.repositories.HelpRequestRepository;
@@ -17,6 +12,7 @@ import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.services.CurrentUserService;
 import edu.ucsb.cs156.example.services.GrantedAuthoritiesService;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +53,15 @@ public class HelpRequestIT {
     // arrange
     LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
 
-    HelpRequest helpRequest = HelpRequest.builder().teamId("team3").requestTime(ldt1).requesterEmail("Blah@gmail.com").tableOrBreakoutRoom("Table 3").solved(false).explanation("help").build();
+    HelpRequest helpRequest =
+        HelpRequest.builder()
+            .teamId("team3")
+            .requestTime(ldt1)
+            .requesterEmail("Blah@gmail.com")
+            .tableOrBreakoutRoom("Table 3")
+            .solved(false)
+            .explanation("help")
+            .build();
 
     helpRequestRepository.save(helpRequest);
 
@@ -93,7 +97,9 @@ public class HelpRequestIT {
     // act
     MvcResult response =
         mockMvc
-            .perform(post("/api/helprequests/post?requesterEmail=email@ha.com&teamId=team3&tableOrBreakoutRoom=room&requestTime=2022-01-03T00:00:00&explanation=help&solved=false").with(csrf()))
+            .perform(
+                post("/api/helprequests/post?requesterEmail=email@ha.com&teamId=team3&tableOrBreakoutRoom=room&requestTime=2022-01-03T00:00:00&explanation=help&solved=false")
+                    .with(csrf()))
             .andExpect(status().isOk())
             .andReturn();
 
